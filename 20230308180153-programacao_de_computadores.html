@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Programação de Computadores</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Programação de Computadores</h1>
+</header>
+<h1 id="introdução">Introdução</h1>
+<blockquote>
+<p>Programação de computadores nada mais é do que projetar, desenvolver
+e construir um programa executável em um computador, para que o mesmo
+cumpra uma determinada tarefa ou responda com determinado e/ou
+específico resultado.</p>
+</blockquote>
+<h1 id="código">Código</h1>
+<blockquote>
+<p>As primeiras linguagens de programação se baseavam em instruções
+descritas com sequências de bytes, ou seja, eram instruções binárias. Um
+exemplo de instrução seria a seguinte sequência de bytes:</p>
+</blockquote>
+<pre class="example"><code>01000011 00111010 00111011 01000001 00101011 01000100
+</code></pre>
+<p>Observe que pode ser bastante complexo compreender o que cada
+sequência de 0s e 1s significa no programa. O programador deveria ter
+profundo conhecimento de quais componentes do dispositivo está
+manipulando, o que tornava a programação trabalhosa. Assim, surgiram
+linguagens mais compreensíveis ao ser humano com a criação das
+linguagens montadoras, ou Assembly. As instruções recebiam nomes, também
+denominados mnemônicos, que ficam mais compreensíveis. A instrução a
+seguir, por exemplo, soma dois valores – um armazenado em um registrador
+(memória) de endereço "CL" e outro valor no registrador "BH".</p>
+<pre class="example"><code>ADD CL,BH
+</code></pre>
+<p>Isso seria correspondente em binário à sequência 00000010
+11001111.</p>
+<p>Códigos de linguagens montadoras são interpretados por um compilador,
+que cria as instruções binárias nescessárias para que o computador se
+comporte da maneira desejada pelo programador</p>
+<h1 id="linguagens-de-alto-nível">Linguagens de alto nível</h1>
+<blockquote>
+<p>As linguagens de alto nível, assim, escondem instruções mais básicas
+da computação em instruções mais sucintas. Assim, uma instrução acaba
+sendo capaz de executar várias operações de uma vez.</p>
+</blockquote>
+<h1 id="compiladores">Compiladores</h1>
+<p>Compiladores e interpretadores, normalmente, convertem o código de
+uma linguagem de alto nível para uma linguagem que o computador possa
+enteder. Em geral os compiladores convervem o código para Asembly para
+que então seja interpretado pela CPU como um binário</p>
+<h1 id="logica-proposicional">Logica proposicional</h1>
+<blockquote>
+<p>A lógica proposicional se baseia no conceito de proposições, uma
+sentença declarativa (expressa por palavras ou símbolos) cujo valor pode
+ser considerado verdadeiro ou falso (e nenhum outro diferente
+desses).</p>
+</blockquote>
+<p>Dessa forma a lógica proposicional liga-se a ciência da computação na
+medida em que ela assume valores binário (verdadeiro e falso) assim como
+os circuitos de um computador estão apenas ligados ou desligados (1 e
+0).</p>
+<p>Na lógica proposicional sentenças são ligadas por conectivos "e" e
+"ou", formando conjuntos de proposições que podem ser verdadeiras ou
+falsas.</p>
+<p>Três princípios são importantes nas proposições:</p>
+<ul>
+<li>Uma proposição verdadeira é verdadeira; uma proposição falsa é falsa
+(princípio da identidade).</li>
+<li>Nenhuma proposição poderá ser verdadeira e falsa ao mesmo tempo.
+(princípio da não contradição).</li>
+<li>Uma proposição ou será verdadeira, ou será falsa: não há outra
+possibilidade (princípio do terceiro excluído).</li>
+</ul>
+<p>Considere as proposições:</p>
+<ul>
+<li><strong>q</strong>: João é medico</li>
+<li><strong>r</strong>: Larissa foi ao cinema ontem</li>
+<li><strong>p</strong>: 5 &gt; 8</li>
+</ul>
+<p>Podemos juntar essas proposições através dos conectivos para formar
+conjuntos de verdade:</p>
+<ul>
+<li><p>Conjunções: formadas pelo conectivo E, só são verdadeiras caso
+ambas as partes da sentença sejam verdadeiras:</p>
+<ul>
+<li>q<sup>r</sup>: "João é médico E Larissa foi ao cinema ontem" -
+Verdadeiro</li>
+<li>q<sup>p</sup>: "João é médico E 5 &gt; 8" - Falso</li>
+</ul></li>
+<li><p>Disjunções: São formadas pelo conectivo OU, só são falsas caso
+ambas as proposições sejam falsas, considere que q é verdadeiro, r e p
+são falsos:</p>
+<ul>
+<li>q∨p: "João é medico ou 5&gt;8" - Verdadeiro</li>
+<li>r∨p: "Larissa foi ao cinema ontem ou 5&gt;8" - Falso</li>
+</ul></li>
+</ul>
+<p>Há ainda dois outros operadores na lógica proposicional:</p>
+<ul>
+<li>"Se então" (→) o p → q (se p então q) será falso apenas se q for
+falso</li>
+<li>"Se e somente se" (↔︎) o p ↔︎ q (p se e somente se q) será verdadeiro
+quando p e q forem ambos verdadeiros ou ambos falsos.</li>
+</ul>
+</body>
+</html>

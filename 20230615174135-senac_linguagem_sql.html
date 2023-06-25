@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Senac: Linguagem SQL</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Senac: Linguagem SQL</h1>
+</header>
+<p><strong>Anterior:</strong> <a
+href="20230615174056-modelagem_de_entidade_e_relacionamento.html">Senac:
+Modelagem de entidade e relacionamento</a> <strong>Proxima</strong>: <a
+href="20230615174154-senac_definicao_de_dados.html">Senac: Definição de
+dados</a> <strong>Raiz:</strong> <a
+href="20230615173208-auxiliar_na_modelagem_e_manipulacao_de_banco_de_dados.html">Auxiliar
+na modelagem e manipulação de banco de dados</a></p>
+<h1 id="info">Info</h1>
+<ul>
+<li>Aula: Semana 3 - Texto 1</li>
+<li>Data: [2023-06-20]</li>
+<li>Recursos (Textos, links, etc): <a
+href="https://senac.blackboard.com/bbcswebdav/pid-9676773-dt-content-rid-243719226_1/institution/Senac%20RS/_cursos_tecnicos/TDS/UC03/conteudos/HTML/04_linguagem_sql/index.html?page=1">Texto</a></li>
+</ul>
+<h1 id="linguagem-sql">Linguagem SQL</h1>
+<h2 id="história-e-definição">História e definição</h2>
+<ul>
+<li>A linguagem SQL (structured query language) foi originalmente
+desenvolvida na IBM</li>
+<li>O primeiro modelo de Banco de dados relacional foi concebido por
+Edgar F. Codd em 1969 a fim de trabalhar com grandes quantidades de
+dados.</li>
+<li>Após a concepção do modelo de Bancos de dados relacionais,
+iniciam=se pesquisas para desenvolver uma linguagem que pudesse ser
+usada como raiz dos sistemas de banco de dados.</li>
+</ul>
+<h3 id="systemr">System/R</h3>
+<ul>
+<li>Na IBM foi desenvolvido o projeto R, com a intenção de provar que
+era viavel melhorar o design e implementação de modelos relacionais.
+Entre 1974 e 1975 o System/R prova que era possivel a criação e
+manuntenção de um protótipo de banco dados relacional. No entanto, o
+modelo era extremamente pesado.</li>
+</ul>
+<h3 id="sql">SQL</h3>
+<ul>
+<li>Ao mesmo tempo em que a IBM trabalhava no System/R pesquisadores
+também buscavam construir a linguagem para interagir com o protótipo de
+BDR. Também em 74, Donald Chamberlin desenvolveram o SQL, que permitia o
+controle e configuração de de banco de dados através de uma linguagem de
+alto nível, isso é, mais próxima do ser humano do que do hardware.</li>
+</ul>
+<h3 id="oracle">Oracle</h3>
+<ul>
+<li>Como o sitema desenvolvido pela IBM só era viável em hardwares
+mainframe IBM <code class="verbatim">=</code> Computadores extremamente
+poderosos e caros para a época — a Relational Software, empresa
+Californiana, construiu um novo produto de banco de dados baseado em SQL
+que se chamava Oracle, o primeiro RDBMS. Sua vantagem era rodar em <a
+href="https://en.wikipedia.org/wiki/Digital_Equipment_Corporation">minicomputadores
+digitais VAX.</a> A empresa foi renomeada para Oracle e hoje é uma das
+maiores distribuidoras de RDBMS</li>
+</ul>
+<h2 id="aplicabilidade">Aplicabilidade</h2>
+<blockquote>
+<p>O objetivo da SQL é fornecer a interface para um banco de dados
+relacional, como, por exemplo, um banco de dados Oracle. Todas as
+instruções SQL são instruções para o banco de dados e é nesse ponto que
+a SQL se difere de linguagens de programação de propósito geral como C e
+Java</p>
+</blockquote>
+<h3 id="recursos-do-sql">Recursos do SQL</h3>
+<ul>
+<li>Processa conjuntos de dados como grupos, ao inves de unidades.</li>
+<li>Fornece navegação automática para os dados</li>
+<li>Usa declarações que são complexas e poderosas individualmente. Essas
+declarações são independetentes.</li>
+<li>Capaz de fazer controle de fluxo (atualmente)</li>
+</ul>
+<h3 id="tarefas-do-sql">Tarefas do SQL</h3>
+<blockquote>
+<p>A SQL permite que você trabalhe com dados no nível lógico. Você
+precisa se preocupar com os detalhes de implementação apenas quando
+quiser manipular os dados. Por exemplo, para recuperar um conjunto de
+linhas de uma tabela, você define uma condição usada para filtrar as
+linhas. Todas as linhas que satisfazem a condição são mostradas em uma
+única etapa e podem ser passadas para o usuário, para outra instrução
+SQL ou para um aplicativo. Você não precisa lidar com as linhas uma por
+uma, nem se preocupar com a forma como elas são armazenadas ou
+recuperadas fisicamente.</p>
+</blockquote>
+<ul>
+<li>SQL fornece instruções para variadas tarefas, sendo as mais básicas
+<ul>
+<li><strong>Consultar</strong> dados em um bando de dados</li>
+<li><strong>Inserir</strong>, <strong>Atualizar</strong> e
+<strong>Excluir</strong> <strong>linhas</strong> em uma
+<strong>tabela</strong></li>
+<li><strong>Controlar</strong>, <strong>substituir</strong>,
+<strong>alterar</strong> e <strong>eliminar</strong>
+<strong>objetos</strong></li>
+<li>Controlar o <strong>acesso</strong> ao banco de dados e seus
+objetos</li>
+<li>Garantir a <strong>consistência</strong> e
+<strong>integridade</strong> do banco de dados</li>
+</ul></li>
+</ul>
+<h3 id="disclamer">Disclamer</h3>
+<ul>
+<li>Apesar de padronizado o SQL pode ter pequenas alterações de a cordo
+com o SGBD escolhido</li>
+</ul>
+<div class="captioned-content">
+<div class="caption">
+Exemplo de querys SQL. Atualiza o campo "populacao" na tabela "pais"
+onde o campo nome é igual a "Brasil"
+</div>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> pais <span class="kw">SET</span> populacao <span class="op">=</span> populacao <span class="op">+</span> <span class="dv">1</span> <span class="kw">WHERE</span> nome <span class="op">=</span> <span class="ot">&quot;Brasil&quot;</span>    </span></code></pre></div>
+</div>
+<h2 id="como-funciona-o-sql">Como funciona o SQL</h2>
+<ul>
+<li>Assim como toda linguagem de programação o SQL é constituido por uma
+sequencia de comandos identificados por tokens reservados.
+<ul>
+<li><p>Tokens podem ser palavras chave como</p>
+<blockquote>
+<p>//javascript var const let function</p>
+</blockquote>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- SQL    </span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span>;</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">UPDATE</span>;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">INSERT</span>;          </span></code></pre></div></li>
+<li><p>Tokens também podem ser simbulos identificadores como:</p>
+<div class="sourceCode" id="cb3" data-org-language="js"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">//Javascritp</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> thi_is_a_string <span class="op">=</span> <span class="st">&quot;Aspas significam que isso é uma string&quot;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> this_is_a_array <span class="op">=</span> [<span class="st">&quot;colchetes&quot;</span><span class="op">,</span> <span class="st">&quot;denotam&quot;</span><span class="op">,</span> <span class="st">&quot;uma&quot;</span><span class="op">,</span> <span class="st">&quot;array&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- SQL</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> MyTable <span class="kw">WHERE</span> nome <span class="op">=</span> <span class="ot">&quot;Vini&quot;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- O asterisco é um caracter que siginifica TODOS OS CAMPOS enquanto &quot;&quot; denotam um valor literal gravado no banco</span></span></code></pre></div></li>
+</ul></li>
+</ul>
+</body>
+</html>

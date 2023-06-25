@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Senac: Modelagem conceitual do banco de dados</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Senac: Modelagem conceitual do banco de dados</h1>
+</header>
+<p><strong>Anterior: <a
+href="20230615174018-senac_banco_de_dados.html">Senac: Banco de
+dados</a></strong> <strong>Proxima</strong>: <a
+href="20230615174056-modelagem_de_entidade_e_relacionamento.html">Modelagem
+de entidade e relacionamento</a> <strong>Raiz:</strong> <a
+href="20230615180723-auxilar_no_manejamento_de_banco_de_dados.html">Auxilar
+no manejamento de banco de dados</a></p>
+<h1 id="info">Info</h1>
+<ul>
+<li>Semana: [UC] Auxiliar na modelagem de Banco de dados - Semana 2 -
+Texto 1</li>
+<li>Datas:[2023-06-15], [2023-06-17]</li>
+<li>Recursos (Textos, links, etc): <a
+href="https://senac.blackboard.com/bbcswebdav/pid-9676773-dt-content-rid-243719226_1/institution/Senac%20RS/_cursos_tecnicos/TDS/UC03/conteudos/HTML/02_modelagem_conceitual/index.html">Texto</a></li>
+</ul>
+<h1 id="modelagem-conceitual-do-banco-de-dados">Modelagem conceitual do
+banco de dados</h1>
+<blockquote>
+<p>O modelo conceitual do banco de dados é uma representação simples.
+Trata-se de uma representação gráfica das estruturas (tabelas) do banco
+de dados, em que é possível identificar todas as relações e restrições e
+suas demais características.</p>
+</blockquote>
+<ul>
+<li>A modelagem começa com a compreensão do ambiente real, com escopos e
+objetivos bem definidos. Equivale a uma planta baixa, com todas as
+instruções para a contstrução de um banco de dados.</li>
+<li>O modelo conceitual mais utilizado atualmente é o <strong>Diagrama
+entidade-relacionamento</strong> (DER)</li>
+</ul>
+<h2 id="técnicas-de-levantamento-de-dados">Técnicas de levantamento de
+dados</h2>
+<ul>
+<li>O levantamento de dados é uma forma de mapeamento, seu principal
+objetivo é permitir conhecer as necessidades da aplicação. Utiliza-se as
+técnicas:
+<ul>
+<li>Observação direta ou pessoal
+<ul>
+<li>Vivenciar o dia a dia do problema que a solução busca resolver.
+Obtemse confirmação sobre informações recebidas</li>
+</ul></li>
+<li>Questionário
+<ul>
+<li>Instrumento preparado para levantar determinadas informações. O
+questionário pode ser aberto ou fechado: o fechado apresenta questões de
+multipla escolha, enquanto o aberto permite que o os participantes
+respondam questões de acordo com seu entendimento.</li>
+</ul>
+<ul>
+<li>Entrevista
+<ul>
+<li>Assim como o questionário a entrevista apresenta perguntas, no
+entanto essas perguntas podem ser modificadas ou adaptadas no decorrer
+da aplicação do instrumento</li>
+</ul></li>
+<li>Analise de documentação
+<ul>
+<li>Essa técnica consiste na analise de documentos já existentes que
+denotam a organização de uma rotina. As informções obtidas serão
+norteadoras para o desenvolvimento dos requisitos e caracteristicas do
+projeto de banco de dados</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="levantamento-e-especificações-de-requisitos">Levantamento e
+especificações de requisitos</h2>
+<ul>
+<li>A partir do levantamento de dados é possível construir as
+especificações e requisitos que um software deve atender.</li>
+</ul>
+<blockquote>
+<p>Um bom requisito deve endereçar uma necessidade direta ou indireta
+dos futuros usuários do sistema a ser desenvolvido.</p>
+</blockquote>
+<blockquote>
+<p>A prática recomendada é sempre documentar, organizar e disponibilizar
+os requisitos a todos os envolvidos no projeto, garantindo que seu
+entendimento seja compartilhado entre todos, ou seja, clientes e equipe
+responsável pelo projeto.</p>
+</blockquote>
+<ul>
+<li>Existe uma variedade de tipos de requisitos, estes devem estar
+relacionada as funcionalidades esperadas para o sistema e seu
+desempenho, seguraça e confiabilidade de informações. Quando se trata de
+projeto de desenvolvimento de softwares, os requisitos dividem-se em
+requisitos funcionais e não funcionais.</li>
+<li>Há várias formas de documentar e disponibilizar requisitos. Uma
+dessas ferramentas de documentação é o DER que monta as entidades e os
+relacionamentos entre elas. Outra são os diagrams UML (unified modeling
+language)</li>
+</ul>
+<h2 id="dicionário-de-dados">Dicionário de dados</h2>
+<ul>
+<li>O dicionário de dados fornece uma descrição detalhada entre todas as
+tabelas encontradas no banco. O dicionário é um documento de texto que
+centraliza informações sobre todo o conjunto de dados. Ele contem no
+minimo todos os nomes e caracteristicas dos atributos de cada uma das
+tabelas do sistema
+<ul>
+<li><p>Importancia da dicionarização</p>
+<ul>
+<li>Quando ocorre a transformação de uma informação para dados esses
+dados pode ser reutilizados por outras pessoas ou sistemas, mas
+especificidades essenciais para a compreensão desses dados podem se
+perder.</li>
+<li>O Dicionário de dados deve documentar de forma objetiva e acertiva
+toda a informação contida no banco e da situação em que foi extraida,
+permitindo a compreensão dos dados armazenados.</li>
+</ul></li>
+<li><p>Problema típico da dicionarização</p>
+<ul>
+<li>Situações onde há dados disponiveis porém esses dados não são
+interpretáveis. Os dicionários resolvem esses problemas pois especificam
+os significados de cada informação contida no banco.</li>
+</ul></li>
+<li><p>Exemplo de dicionário de dados:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Nome da tabela</th>
+<th>Atributo</th>
+<th>Conteudo</th>
+<th>Tipo</th>
+<th>Formato</th>
+<th>Faixa</th>
+<th>Necessário</th>
+<th>PF/FK ou UK</th>
+<th>Tabela referenciada</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Consumidor</td>
+<td>Nome</td>
+<td>Nome do consumidor</td>
+<td>Varchar(200)</td>
+<td>XXXXXX</td>
+<td></td>
+<td>S</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Endereço</td>
+<td>Endereço do consumidor</td>
+<td>Varchar(200)</td>
+<td>xxxxxxxx</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>CPF</td>
+<td>CPF do consumidor</td>
+<td>CHAR(14)</td>
+<td>999.999.999-99</td>
+<td></td>
+<td>S</td>
+<td>pk</td>
+<td></td>
+</tr>
+</tbody>
+</table></li>
+</ul></li>
+</ul>
+<h2 id="arquitetura-de-arquivos-de-dados">Arquitetura de arquivos de
+dados</h2>
+<blockquote>
+<p>A arquitetura de dados define um conjunto padrão de produtos e
+ferramentas que uma organização usa para gerenciar dados.</p>
+</blockquote>
+<ul>
+<li>Um fator imporante do desempenho de um banco de dados é o seu
+mecanismo de armazenamento, mais especificamente suas tabelas.
+Diferentes tipo de armazenamento podem fornecer mais desempenho em uma
+situação do que em outras</li>
+<li>Os tipos mais comuns de armazenamento são o MyISAM (Utilizado pelo
+MySQL) e o InnoDB (mecanismo alternativo integrado ao MySQL para bancos
+de dados de alto desempenho)</li>
+<li>Para entender a defiferença é imporante entender o conceito de
+<strong>Bloqueio.</strong></li>
+</ul>
+<h3 id="bloqueio">Bloqueio</h3>
+<ul>
+<li>Sistema de proteção da integridade de dados</li>
+<li>Significa proteger dados para não serem modificados por nada além da
+requisição que gerou o bloqueio</li>
+</ul>
+<h3 id="myisam-vs-innodb">MyISAM vs InnoDB</h3>
+<ul>
+<li>Existem diverças formas de bloqueio sendo as mais conhecidas o
+MyISAM e o InnoDB
+<ul>
+<li>Bloqueio de tabela (MyISAM):
+<ul>
+<li>Bloqueia a tabela inteira quando uma ou mais celulas precisam ser
+alteradas ou excluidas, é o bloqueio padrão do MyISAM</li>
+</ul></li>
+<li>Bloqueio de linha (InnoDB):
+<ul>
+<li>Bloqueia um range de linhas enquanto uma ou mais celulas dentro do
+range são alteradas ou excluidas. Bloqueio do InnoDB</li>
+</ul></li>
+</ul></li>
+</ul>
+<blockquote>
+<p>Um aplicativo ou site que contém uma tabela utilizada com frequência
+funciona excepcionalmente bem empregando-se o mecanismo de armazenamento
+InnoDB, resolvendo gargalos de bloqueio de tabela. No entanto, a questão
+de usar um sobre o outro é subjetiva, pois nenhum deles é perfeito em
+todas as situações. Existem pontos fortes e limitações para ambos os
+mecanismos de armazenamento.</p>
+</blockquote>
+<ol>
+<li><p>MyISAM</p>
+<ul>
+<li>Supera o InnoDB em tabelas grandes que requerem mais atividade de
+leitura do que de gravação (Novos itens, alterações ou exclusões)</li>
+<li>É mais rapida na medida em que bloquear a tabela toda demanda menos
+poder computacional do que descobrir quais linhas devem ser
+bloqueadas.</li>
+<li>Melhor utilizado em tabelas grandes que não alteram seus dados com
+frequência</li>
+</ul></li>
+<li><p>InnoDB</p>
+<ul>
+<li>Supera o MyISAM quando os dados de uma tabela são alterados
+frequentemente. Alterações na tabela gravam dados mais rapido do que a
+leitura deles acontece por segundo.</li>
+<li>Dessa forma o InnoDB pode acompanhar grandes quantidades de
+solicitações pois bloqueia apenas algumas linhas ao invés de bloquear
+toda a tabela e portanto pode executar mais de uma alteração por
+vez</li>
+</ul></li>
+</ol>
+<h2 id="teoria-de-conjuntos">Teoria de conjuntos</h2>
+<ul>
+<li><p>Ramo da matemática que estuda conjuntos e o comportamento de uma
+coleção de conjuntos.</p></li>
+<li><p>A relação basica entro um conjunto que o elemento que o compõe é
+chamada de <strong>relação de pertinência</strong>, ou seja, decidir se
+um elemento pertence ou não a um conjunto.</p></li>
+<li><p>Se o elemento x pertence ao conjunto A temos:</p>
+<pre class="example"><code>x ∈ A
+</code></pre></li>
+<li><p>Se o elemento x não pertence ao conjunto A temos:</p>
+<pre class="example"><code>x ∉ A
+</code></pre></li>
+<li><p>O conceito de pertencimento é a teoria para extração de
+informações do banco de dados. As principais operações de conjunto
+aplicadas são <strong>União</strong>, <strong>Intersecção</strong>, e
+<strong>Diferença</strong></p></li>
+</ul>
+<h3 id="união-intersecção-e-diferença">União, Intersecção e
+Diferença</h3>
+<ul>
+<li><p>Para compreender as operações de conjuntos utilizaremos como
+exemplo as tabelas:</p>
+<ul>
+<li>Tabela A:</li>
+</ul>
+<p>| id | Produto |</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Melão</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Banana</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Limão</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Tabela B:</li>
+</ul>
+<p>| id | Produto |</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Maçã</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Morango</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Limão</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<ol>
+<li><p>União</p>
+<ul>
+<li><p>Permite que todos os elementos de um conjunto A e B sejam unidos
+(agrupados), em um banco de dados podemos buscar as informações de todas
+as tabelas pertencentes aos grupos inunidos.</p></li>
+<li><p>Formalmente a definição de união é:</p>
+<pre class="example"><code>A∪B = {x:x ∈ A ou x ∈ B}
+</code></pre>
+<ul>
+<li>Dissecando: conclui-se que o grupo formado pela união entre A e B
+deve ser formado por qualquer membro presente em A ou em B</li>
+</ul></li>
+<li><p>Exemplo:</p>
+<ul>
+<li>Tabela A∪B:</li>
+</ul>
+<p>| id | Produto |</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Melão</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Banana</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Limão</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Maçã</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Morango</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>Assim temos</p>
+<p><img src="./static/senac_union.png" /></p></li>
+</ul></li>
+<li><p>Intersecção:</p>
+<ul>
+<li><p>Em uma intersecção os apenas os elementos comuns a todos os
+conjuntos são selecionados.</p></li>
+<li><p>Formalmente temos</p>
+<pre class="example"><code>A⋂B = {x:x ∈ A e x ∈ B}
+</code></pre></li>
+<li><p>Dissecando: Conclui-se que o Conjunto A⋂B deve ser formado apenas
+por elementos pertencentes tanto a A quanto a B</p></li>
+<li><p>Utilizando as tabelas temos como exemplo:</p>
+<ul>
+<li>Tabela A⋂B:</li>
+</ul>
+<p>| id | Produto |</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Limão</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>Assim temos:</p>
+<p><img src="./static/senac_interceccao.png" /></p></li>
+</ul></li>
+</ul></li>
+<li><p>Diferença (Complemento)</p>
+<ul>
+<li><p>Essa operação permiote selecionar apenas elementos que pertencem
+apenas a ambos os conjuntos mas que não aparecem em ambos os conjuntos,
+gerando dois novos conjuntos sem a interseção entre eles</p></li>
+<li><p>Formalmente temos:</p>
+<pre class="example"><code>A - B = {x:x∈A e x∉B}
+</code></pre></li>
+<li><p>Utilizando as tabelas temos duas tabelas:</p>
+<ul>
+<li><p>Tabela A-B resulta em:</p>
+<ul>
+<li>Produto 1:</li>
+</ul>
+<p>| id | Produto |</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Melão</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Banana</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Produto 2:</li>
+</ul>
+<p>| id | Produto |</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Maçã</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Morango</td>
+</tr>
+</tbody>
+</table></li>
+</ul></li>
+<li><p>Sendo os resultados:</p>
+<figure>
+<img src="./static/senac_diff.png" />
+<figcaption>A area pintada de cada resultado corresponde a tabela
+retornada da operação A - B</figcaption>
+</figure></li>
+</ul></li>
+</ol>
+<h2 id="tipos-de-dados">Tipos de dados:</h2>
+<ul>
+<li>Em SQL cada campo (ou celula) de uma tabela deve ser preenchida com
+o um tipo de dado especifico. Isso significa que bancos de dado SQL são
+fortemente tipados.</li>
+<li>Os principais tipos em SQL são:</li>
+</ul>
+<h3 id="numéricos">Numéricos:</h3>
+<ul>
+<li>Smallint:
+<ul>
+<li>É um número inteiro de 16 bits, que permite representar até 65.535
+números, entre positivos e negativos.</li>
+</ul></li>
+<li>int ou Integer:
+<ul>
+<li>É um número inteiro de 32 bits, que permite representar até
+4.294.967.295 números, entre positivos e negativos.</li>
+</ul></li>
+<li>BigInt:
+<ul>
+<li>É um número inteiro de 64 bits, que permite representar até
+18.446.744.073.709.551.615 números, entre positivos e negativos.</li>
+</ul></li>
+<li>Real:
+<ul>
+<li>É um número fracionário de precisão simples, ou seja, ocupa o
+tamanho máximo de 32 bits. (float, ver <a
+href="20230528132917-introducao_ao_java_variaveis.html">Introdução ao
+Java: Variaveis</a>)</li>
+</ul></li>
+<li>Decimal
+<ul>
+<li>É um número fracionário com casas decimais exatas, ou seja, pode-se
+controlar exatamente a quantidade de casas inteiras e decimais de um
+número. A declaração decimal (10,2), por exemplo, indica que há dez
+dígitos de representação numérica, porém dois deles servirão para a
+parte fracionária do número.</li>
+</ul></li>
+</ul>
+<h3 id="alfanuméricos">Alfanuméricos:</h3>
+<ul>
+<li>Char: Alocação fixa de quantidade de caracteres a serem armazenados.
+Exemplo: Se tenho um CHAR(200) e a palavra escrita for "Teste" ainda
+assim 200 posições na memória serão ocupadas.</li>
+<li>Varchar: Faz alocação variavel de memória para a quantidade de
+caracteres escrita. Isso é se temos um Varchar(200) isso significa que o
+tamanho máximo que o campo pode assumir são 200 caracteres, no entanto,
+se a mesma palavra "Teste"for gravada no campo ele consumirá apenas o
+espaço de 5 caracteres, comprimindo o resto.</li>
+</ul>
+<h3 id="dados-de-tempo">Dados de tempo</h3>
+<ul>
+<li>Date - Utilizado para armazenar datas no padrão americano:
+YYYY-mm-DD</li>
+<li>Time - Utilizado para armazenar horas no padrão americano:
+HH-MM-SS</li>
+</ul>
+<h3 id="outros-tipos-de-dados-que-eu-sei-que-existem-extra-texto">Outros
+tipos de dados que eu sei que existem (extra-texto)</h3>
+<ul>
+<li>BOOL: Armazena 1 bit: 0 ou 1 / Verdadeiro ou falso
+<ul>
+<li>De certa forma um tipo numérico</li>
+</ul></li>
+<li>JSON em postgreSQL: Armazena JSON
+<ul>
+<li>De certa forma um tipo Varchar</li>
+</ul></li>
+<li>FILE: Armazena um caminho para um arquivo
+<ul>
+<li>De certa forma um tipo Varchar</li>
+</ul></li>
+</ul>
+<h2 id="integridade-referencial">Integridade referencial</h2>
+<blockquote>
+<p>A integridade referencial está ligada a toda garantia de que um valor
+que aparece em uma relação para determinado conjunto de atributos também
+apareça para certo conjunto de atributos em outra relação.</p>
+</blockquote>
+<ul>
+<li>Integridade refencial é um recurso de design que impede que sejam
+inseridos dados inconsistentes em um banco de dados.</li>
+<li>A maioria dos Bancos de dados relacionais possuem regras de
+integridade refencial que se aplica ao criar relações entre
+tabelas.</li>
+<li>Regras de chave mantem a integridade referencial de uma tabela
+através da ligação das colunas que receberam uma chave e a validação dos
+valores que podem ser inseridos.</li>
+</ul>
+<h3 id="comportamente-dos-campos-compostos-por-chaves">Comportamente dos
+campos compostos por chaves:</h3>
+<ol>
+<li><p>Primary Key:</p>
+<ul>
+<li>Uma chave primária é uma regra implementada em uma coluna que
+garante que os valores inserido ali nunca se repitam. Serve como um
+indentificador único do campo em sua tabela.</li>
+</ul></li>
+<li><p>Unique key (alternatives ou candidatas):</p>
+<ul>
+<li>Colunas que naturalmente recebem valores unicos mas que podem estar
+fora das regras da chave primária, por exemplo um campo como "CPF".
+Sabe-se que cada brasileiro possui um CPF único, no entanto esse campo
+não será uma chave primária (chave de identificação no sistema). Garante
+que nenhuma outra entrada com o mesmo valor seja criado.</li>
+</ul></li>
+<li><p>Foreign key:</p>
+<ul>
+<li>Uma foreign key - ou chave estrangeira - é um valor que pode
+determinar o comportamento de uma ou mais colunas, fazendo com que elas
+referenciem os valores existentes em uma chave primária. Dessa forma
+toda coluna que recebe a regra de chave estrangeira deve ter recebido a
+regra de chave primária em sua tabela de origem. Isso permite
+estabelecer relações entre duas tabelas do banco de dados</li>
+</ul></li>
+</ol>
+<h3 id="consequências-da-falta-de-integridade-referencial">Consequências
+da falta de integridade referencial</h3>
+<ul>
+<li>A falta de integridade pode levar a retorno de dados incompletos ou
+equivocados sem indicação de erro.</li>
+<li>Exemplo (feito por mim)
+<ul>
+<li>Suponha que em um sistema é necessário buscar todas as compras
+feitas por um cliente chamado João José e possuimos as seguintes tabela:
+<ul>
+<li><p>Clientes:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Nome</th>
+<th>Sobrenome</th>
+<th>CPF</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>João</td>
+<td>José</td>
+<td>123456789-00</td>
+</tr>
+<tr class="even">
+<td>João</td>
+<td>José</td>
+<td>xxxxxxxxx-zz</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>Vendas:</p>
+<table>
+<thead>
+<tr class="header">
+<th>produto</th>
+<th>Cliente</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cerveja</td>
+<td>José</td>
+</tr>
+<tr class="even">
+<td>Carne</td>
+<td>José</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<ul>
+<li>Perceba que como há dois clientes com o mesmo nome é impossivel
+saber nesse caso qual cliente comprou o que, apenas que dois cliente com
+sobrenome José compraram produtos diferentes, ou que apenas um cliente
+chamado josé comprou ambos os produtos.</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="mecanismo-para-integridade-referencial">Mecanismo para
+integridade referencial</h3>
+<ul>
+<li><p>Para exemplos utilize as tabelas:</p>
+<ul>
+<li>Tabela A: Clientes</li>
+</ul>
+<p>| Id | Nome | Ramo |</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>ABC</td>
+<td>Mercado</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>XYZ</td>
+<td>Restaurante</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Tabela B: Vendas</li>
+</ul>
+<p>| ID | produto | valor | cliente<sub>id</sub> |</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Carnes</td>
+<td>1000</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Queijos</td>
+<td>3000</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Vinhos</td>
+<td>500</td>
+<td>1</td>
+</tr>
+</tbody>
+</table></li>
+<li><p><strong>Cascade:</strong></p>
+<ul>
+<li>A exclusão de um registro pode causar a exclusão de registros de
+chave estrangeira correspondentes.</li>
+<li>Nesse caso suponha que a empresa ABC não é mais um cliente, e
+gostariamos de exclui-la do bando de clientes. Os registros de venda
+feitos para essa empresa também serão excluidos, o que no caso não é
+muito interessante.</li>
+<li>No entanto suponha que a tabela A corresponde a Jogadores e a Tabela
+B corresponda a seus inventários e que um jogador resolva excluir sua
+conta. Nesse caso não é interessante que um inventário permaneça no
+banco por em referenciando jogador nenhum.</li>
+</ul></li>
+<li><p><strong>No action - Nenhuma ação:</strong></p>
+<ul>
+<li>Esse metedodo apenas proíbe a exlclusão de registros se houver
+regisstros de chave dependetes desse registro.</li>
+<li>Dessa forma se tentarmos excluir a empresa ABC dos nossos registros
+um erro será retornado dizendo que outras chaves dependem do registro de
+ABC. Seria o ideal para o caso de um registro de vendas.</li>
+</ul>
+<ul>
+<li><strong>Set Null - defina nulo:</strong>
+<ul>
+<li>A exclusão de um registro pode fazer com que apenas a coluna de
+chave estrangeira correspondente seja definida para nulo.</li>
+<li>No caso se Exlcuirmos a empresa de ID 1 na tabela A os registros na
+tabela B que possuem como cliente<sub>id</sub> o valor 1 continuam a
+existir, no entanto ficam sem valor. Ideal para um survey por, exemplo:
+<ul>
+<li>Perguntamos a todos os usuários de uma plataforma como eles avaliam
+o serviço. Mas logo depois de responder um deles exclui sua conta. A
+resposta dele segue relevante, no entanto não há mais necessidade de
+mante-lo nos registros de bancos de dados</li>
+</ul></li>
+</ul></li>
+<li><strong>Set default (conjunto Padrão):</strong>
+<ul>
+<li>Faz o mesmo que o Set Null porém ao invés de apenas anular o campo o
+retorna para um valor padrão definido préviamente.</li>
+</ul></li>
+</ul></li>
+</ul>
+<h1 id="conceitos-importantes">Conceitos importantes:</h1>
+</body>
+</html>

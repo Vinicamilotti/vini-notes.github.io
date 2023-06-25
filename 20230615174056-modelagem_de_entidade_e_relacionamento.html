@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Senac: Modelagem de entidade e relacionamento</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Senac: Modelagem de entidade e relacionamento</h1>
+</header>
+<p><strong>Anterior:</strong> <a
+href="20230615174042-senac_modelagem_conceitual_do_banco_de_dados.html">Senac:
+Modelagem conceitual do banco de dados</a> <strong>Proxima</strong>: <a
+href="20230615174135-senac_linguagem_sql.html">Senac: Linguagem SQL</a>
+<strong>Raiz:</strong> <a
+href="20230615174018-senac_banco_de_dados.html">Senac: Banco de
+dados</a></p>
+<h1 id="info">Info</h1>
+<ul>
+<li>Aula: [UC] Auxiliar na modelagem de Banco de dados - Semana 2 -
+Texto 2</li>
+<li>Data: [2023-06-17]</li>
+<li>Recursos (Textos, links, etc):
+<ul>
+<li><a
+href="https://senac.blackboard.com/bbcswebdav/pid-9676773-dt-content-rid-243719226_1/institution/Senac%20RS/_cursos_tecnicos/TDS/UC03/conteudos/HTML/03_modelo_entidade_relacionamento/index.html?page=1">Texto</a></li>
+<li>Videos:
+<ul>
+<li>MySQL Workbench 1 - Acesso ao modo modelagem: <a
+href="https://senac.blackboard.com/bbcswebdav/pid-9676791-dt-content-rid-274494686_1/xid-274494686_1">Video</a></li>
+</ul></li>
+</ul></li>
+</ul>
+<h1 id="parte-1">Parte 1</h1>
+<h2
+id="o-modelo-entidade-relaciomento-er-e-o-diagrama-entidade-e-relacionamento">O
+modelo entidade relaciomento (ER) e o Diagrama entidade e
+relacionamento:</h2>
+<ul>
+<li>O modelo entidade relacionamento é uma forma de <a
+href="20230615174042-senac_modelagem_conceitual_do_banco_de_dados.html">Modelagem
+conceitual de banco de dados</a> e o DER é a ferramenta mais utilizada
+para tal e utiliza representações graficas.</li>
+</ul>
+<blockquote>
+<p>Por enquanto, será utilizada a notação original de Peter Chen,
+criador da abordagem entidade e relacionamento, em 1976, em conjunto com
+os diagramas do MySQL Workbench 8.0, os quais, no momento da elaboração
+desse material, são a versão mais atual disponível.</p>
+</blockquote>
+<ul>
+<li>O modelo entidade e relacionamento, ou simplesmente modelo ER, é uma
+abstração do banco de dados (BD)</li>
+</ul>
+<h3 id="conceitos">Conceitos</h3>
+<ul>
+<li>Ver uso no MySQL aqui: <a
+href="https://senac.blackboard.com/webapps/blackboard/content/listContent.jsp?course_id=_215401_1&amp;content_id=_9676774_1">Videos</a></li>
+</ul>
+<ol>
+<li><p>Entidade</p>
+<ul>
+<li>Entidade é o conjunto de objetos da realidade modelada sobre os
+quais se deseja manter informações no banco de dados.</li>
+<li>Como o ER é uma abstração do banco de dados somente os objetos sobre
+os quais se deseja manter informação devem constar na modelagem</li>
+</ul>
+<blockquote>
+<p>Uma entidade pode ser um objeto concreto (cliente, pet, automóvel),
+mas também podem ser mapeados objetos abstratos (departamento, sala de
+aula, conta-corrente).</p>
+</blockquote>
+<ul>
+<li>Nos diagramas de ER entidades são represetntadas por retangulos:
+<img src="./static/senac_ent.png" /></li>
+</ul></li>
+<li><p>Relacionamento</p>
+<ul>
+<li><p>Conjunto de associação entre as <span class="spurious-link"
+target="Entidade"><em>Entidades</em></span></p>
+<blockquote>
+<p>Além de especificar as entidades que devem ser armazenadas no banco
+de dados, o modelo ER deve permitir a especificação das propriedades dos
+objetos. A associação entre esses objetos é uma das propriedades das
+quais se pode querer manter informações.</p>
+</blockquote></li>
+<li><p>Relacionamentos no diagrama de Chen são representados por
+losangos contendo o nome dos relacionamentos ligados por linas aos
+retangulos</p></li>
+<li><p>Exemplificando:</p>
+<ul>
+<li>Considere um DER contendo duas <span class="spurious-link"
+target="Entidade"><em>Entidades</em></span>
+<ol>
+<li>Aluno</li>
+<li>Laboratório de informática</li>
+</ol></li>
+<li>Existe a necessidade de manter a informação sobre a lotação de cada
+laboratório
+<ul>
+<li>Sendo assim, é necessário saber onde cada aluno está e qual a
+lotação de cada laboratório</li>
+</ul></li>
+</ul>
+<p><img src="./static/senac_relacao.png" /></p>
+<ul>
+<li>Sendo assim temos:
+<ul>
+<li>Um conjunto de objetos identificados como alunos (entidade
+"alunos")</li>
+<li>Um conjunto de objetos identificados como laboratórios de
+informática (entidade "laboratório de informática")</li>
+<li>Um conjunto de associações entre "aluno" e "laboratório de
+informática", ligando um aluno a um laboratório (relacionamento
+"lotação")</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>Autorrelacionamento</p>
+<ul>
+<li>O autorrelacionamento é um relacionamento entre ocorrencias de uma
+mesma <span class="spurious-link"
+target="Entidade"><em>Entidade</em></span></li>
+<li>Quando há essa ocorrência é necessário um conceito adicional que é o
+papel de cada entidade no relacionamento. Esse papel deve expressar a
+função que uma instancia de entidade cumpre dentro da instancia de um
+relacionamento.</li>
+<li>Exemplificando:
+<ul>
+<li>Entidade Empregado (colaborador, na figura)</li>
+<li>Há um empregado que cordena os demais empregados</li>
+<li>Nessa situação temos:</li>
+</ul></li>
+</ul>
+<p><img src="./static/senac_autorrelacionamento.png" /></p>
+<ul>
+<li><p>Supondo a tabela (extra-texto)</p>
+<table>
+<thead>
+<tr class="header">
+<th>Id</th>
+<th>Nome</th>
+<th>Cargo</th>
+<th>cordenado<sub>por</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>José</td>
+<td>Gerente</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Pedro</td>
+<td>Atendente</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Daniel</td>
+<td>Cozinheiro</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Joaquim</td>
+<td>Ajudante de cozinha</td>
+<td>3</td>
+</tr>
+</tbody>
+</table></li>
+</ul></li>
+</ol>
+<h2 id="cardinalidade-em-relacionamentos">Cardinalidade em
+relacionamentos:</h2>
+<blockquote>
+<p>Portanto, cardinalidade é "o número de ocorrências de entidade
+associadas a uma ocorrência da entidade em questão por meio do
+relacionamento" (HEUSER, 2001).</p>
+</blockquote>
+<h3 id="cardinalidade-máxima">Cardinalidade máxima</h3>
+<ul>
+<li>A cardinalidade máxima é o numero máximo de relações que podem
+ocorrer entre um objeto e outro:
+<ul>
+<li>Suponha o exemplo do laboratório de informática:
+<ul>
+<li>Cada aluno pode estar em no máximo 1 laboratório de informática,
+isso significa que a cardinalidade máxima de aluno é 1 pois um aluno
+pode se relacionar com apenas 1 laboratório</li>
+<li>No entanto cada laboratório de informática pode alocar 30 alunos.
+Isso significa que a cardinalidade máxima de Laboratório é de 30, pois
+cada laboratório pode se relacionar com até 30 alunos</li>
+</ul>
+<ul>
+<li>Em suma n alunos podem estar em cada laboratório, sendo n a lotação
+máxima.
+<ul>
+<li>Sendo assim há uma relação de 1 pra muitos, sendo 1 laboratório
+contendo muitos alunos mas cada aluno apenas em um laboratório</li>
+</ul></li>
+</ul>
+<img src="./static/senac_1_to_many.png" /></li>
+<li>Podemos dessa forma inferir que uma Foreign Key deve ser incluida em
+alunos para representar em que laboratório ele está</li>
+</ul></li>
+</ul>
+<h2 id="relacionamento-binário">Relacionamento binário</h2>
+<ul>
+<li>Relacionamentos binários são aqueles que contêm duas ocorrências de
+entidade</li>
+</ul>
+<h3 id="classificação-dos-relacionamentos-binários">Classificação dos
+relacionamentos binários</h3>
+<ul>
+<li>Classificações são definidas por conta das cardinalidades máximas
+das entidades envolvidas no relacionamento</li>
+</ul>
+<ol>
+<li><p>1 para 1 (1:1)</p>
+<ul>
+<li>Ocorre quando uma entidade se relaciona com no máximo uma instancia
+de outra entidade.</li>
+<li>Exemplo:
+<ul>
+<li>Cada aluno se aloca a um computador no laboratório, dessa forma cada
+aluno se relaciona apenas com um computador e cada computador com apenas
+um aluno</li>
+</ul>
+<img src="./static/senac_1_to_1.png" /></li>
+</ul></li>
+<li><p>1 para Muitos (1:N)</p>
+<ul>
+<li>Quando instancia da entidade se relaciona com muitas instancias de
+outras entidades.
+<ul>
+<li>Exemplo:
+<ul>
+<li>Cada produto possui uma categoria mas cada categoria possui muitos
+produtos</li>
+</ul>
+<img src="./static/senac_1_to_n.png" /></li>
+</ul></li>
+</ul></li>
+<li><p>n para n (N:N)</p>
+<ul>
+<li>Quando várias estancias de uma entidade se relacionam com várias
+estancias de outra entidade</li>
+<li>Exemplo:
+<ul>
+<li>Um programador pode estar trabalhando em vários projetos e os
+projetos podem conter muitos programadores</li>
+</ul></li>
+</ul>
+<p><img src="./static/senac_n_to_n.png" /></p>
+<ul>
+<li><strong>OBS:</strong> no MySQL, quando ocorre uma relação N:N essa
+relação se torna uma nova entidade</li>
+</ul>
+<p><img src="./static/senac_mysql_nn.png" /></p></li>
+</ol>
+<h2 id="relacionamentos-ternários">Relacionamentos ternários</h2>
+<ul>
+<li>Relacionamentos entre 3 entidades. É possivel construir
+relacionamentos ternários, quarternário e assim por diante <img
+src="./static/senac_rel_ternario.png" /></li>
+</ul>
+<blockquote>
+<p>No caso de relacionamentos ternários, a cardinalidade máxima
+refere-se a pares de entidades. Logo, em um relacionamento "R" e entre
+as três entidades "A", "B" e "C", a cardinalidade máxima de "A" e "B"
+indica quantas ocorrências de "C" podem estar associadas a um par de
+ocorrências de "A" e "B". Veja o quadro a seguir.</p>
+</blockquote>
+<p><img src="./static/senac_tern_ex.png" /></p>
+<ul>
+<li>O exemplo indica que cada distribuidor pode enviar n produtos para
+cada para cada cidade. Sendo assim temos o par cidade/produto com
+cardinalidade 1, pois um cliente faz o pedido de um produto em uma
+cidade, enquanto a cardinalidade de de distribuidor é n pois ele envia n
+produtos para n clientes em n cidades</li>
+<li>Veja um exemplo mais complexo a seguir:</li>
+</ul>
+<p><img src="./static/senac_relacao_complexa.png" /></p>
+<ul>
+<li>O exemplo denota que
+<ul>
+<li>Deseja-se manter informações sobre alunos, cursos, disciplinas e
+departamentos</li>
+<li>Deseja-se manter informações sobre a associação de:
+<ol>
+<li>Alunos a cursos</li>
+<li>Disciplinas a cursos</li>
+<li>Disciplinas a departamentos</li>
+<li>Disciplinas a requisistos</li>
+</ol></li>
+</ul></li>
+<li>As cardinalidades expressam que:
+<ul>
+<li>Cada disciplina pertence a um departamento e cada departamento
+possui muitas disciplinas — <span class="spurious-link"
+target="1 para Muitos (1:N)"><em>1 para Muitos (1:N)</em></span></li>
+<li>Uma disciplina pode ter muitos requisitos e um requisito pode
+liberar muitas disciplinas — <span class="spurious-link"
+target="n para n (N:N)"><em>n para n (N:N)</em></span></li>
+<li>Uma disciplina pode estar em muitos cursos e os cursos tem diversas
+disciplinas — <span class="spurious-link" target="n para n (N:N)"><em>n
+para n (N:N)</em></span></li>
+<li>Um aluno esta escrito em apenas um curso mas um curso pode ter
+vários alunos — <span class="spurious-link"
+target="1 para Muitos (1:N)"><em>1 para Muitos (1:N)</em></span></li>
+</ul></li>
+</ul>
+<h1 id="parte-2">Parte 2</h1>
+<h2 id="atributo">Atributo</h2>
+<ul>
+<li>Atributo é um dado associado a cada instancia de uma entidade ou
+relacionamento. Ou seja são os dados pertinentes acerca de cada entidade
+ou relacionamento.</li>
+<li>No diagrama de Chen são representados graficamente como circulos com
+seu identificador escrito ao lado e ligados as entidades ou
+relacionamentos por linhas:</li>
+</ul>
+<p><img src="./static/senac_ent_atrib.png" /> <img
+src="./static/senac_rel_atrib.png" /></p>
+<h2 id="identificadores">Identificadores:</h2>
+<ul>
+<li>Chaves primairárias ou Chaves Estrangeiras — <a
+href="20230615174042-senac_modelagem_conceitual_do_banco_de_dados.html">Ver:
+Modelagem conceitual do banco de dados</a></li>
+</ul>
+</body>
+</html>
