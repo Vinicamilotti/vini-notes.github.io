@@ -159,6 +159,70 @@
       vertical-align: middle;
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
@@ -172,10 +236,1270 @@
 <strong>Raiz:</strong></p>
 <h1 id="info">Info</h1>
 <ul>
-<li>Aula:</li>
-<li>Data:</li>
-<li>Recursos (Textos, links, etc):</li>
+<li>Aula: Semana 5 - Texto 1</li>
+<li>Data: [2023-06-28]</li>
+<li>Recursos (Textos, links, etc): <a
+href="https://senac.blackboard.com/bbcswebdav/pid-9676773-dt-content-rid-243719226_1/institution/Senac%20RS/_cursos_tecnicos/TDS/UC03/conteudos/HTML/07_consulta_dados/index.html?page=2">Texto</a></li>
 </ul>
-<h1 id="section"></h1>
+<h1 id="manipulação-de-dados">Manipulação de dados</h1>
+<ul>
+<li>A manipulação de dados é o processo de adicionar, consultar, deletar
+ou alterar dados.</li>
+<li>Em bancos de dados relacionais o a manipulção de dados é feita
+através de <a href="20230615174135-senac_linguagem_sql.html">SQL</a>.
+<ul>
+<li>O grupo de comandos utilizados para manipulação de dados recebe o
+nome de <strong>DML</strong> – Data manipulation language)</li>
+</ul></li>
+</ul>
+<h2 id="comandos-básicos">Comandos básicos</h2>
+<ul>
+<li><strong>SELECT</strong> para coleta de dados</li>
+<li><strong>INSERT</strong> para inserção de dados</li>
+<li><strong>UPDATE</strong> para alteração de dados já existentes</li>
+<li><strong>DELETE</strong> para deleção de dados</li>
+</ul>
+<h2 id="disclamer">Disclamer</h2>
+<ul>
+<li><p>O conteudo da aula focará nesses comandos no entanto em alguns
+momentos será necessário consultar a tabela, para fins
+demonstrativos.</p></li>
+<li><p>Para consultar tabelas o comando utilizado é o
+<strong>SELECT</strong>, que será visto mais a fundo nos textos <a
+href="20230615174247-senac_consulta_de_dados.html">Consulta de dados</a>
+e <a
+href="20230615174326-senac_consulta_com_multiplas_tabelas.html">Consulta
+com múltiplas tabelas</a>.</p></li>
+<li><p>Para os fins dessas anotações utilizar o comando:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> nome_da_tabela;</span></code></pre></div></li>
+</ul>
+<h2 id="preparando-o-ambiente">Preparando o ambiente</h2>
+<ul>
+<li><p>Utilizar a database estudosSenac</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">DATABASE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> senacEstudos;</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> senacEstudos;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">USE</span> senacEstudos;</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> curso (</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">id</span> <span class="dt">int</span> AUTO_INCREMENT,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>nome <span class="dt">varchar</span>(<span class="dv">150</span>),</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>descricao text,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">PRIMARY</span> <span class="kw">KEY</span> (<span class="kw">id</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> aluno (</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="kw">id</span> <span class="dt">int</span> AUTO_INCREMENT,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>nome <span class="dt">varchar</span>(<span class="dv">30</span>),</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>sobrenome <span class="dt">varchar</span>(<span class="dv">30</span>),</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>data_nascimento <span class="dt">date</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>curso_id <span class="dt">int</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="kw">PRIMARY</span> <span class="kw">KEY</span> (<span class="kw">id</span>),</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="kw">FOREIGN</span> <span class="kw">KEY</span> (curso_id) <span class="kw">REFERENCES</span> curso(<span class="kw">id</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>);              </span></code></pre></div></li>
+</ul>
+<h2 id="comandos-insert-update-e-delete">Comandos INSERT, UPDATE, e
+DELETE</h2>
+<h3 id="insert---inclusão-de-dados">INSERT - Inclusão de dados</h3>
+<ul>
+<li><p>A instrução INSERT INTO é utilizada para inserir dados em uma
+tabela e permite fazer isso utilizando diversos parametros
+variaveis</p></li>
+<li><p>A sintaxe básica do comando INSERT é</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> nome_da_tabela <span class="kw">VALUES</span> (valores);</span></code></pre></div></li>
+<li><p>Destrinchando:</p>
+<ol>
+<li>INSERT: inicia o comando INSERT</li>
+<li>INTO: indica que uma tabela será selecionada para inclusão de
+dados</li>
+<li>nome<sub>databela</sub>: tabela selecionada</li>
+<li>VALUES: indica quais valores devem ser inseridos, os valores a serem
+inseridos ficam entre parentenses — (valores)</li>
+</ol></li>
+</ul>
+<ol>
+<li><p>Tipos de dados a serem inseridos</p>
+<ul>
+<li>Dados numericos: Devem ser inseridos diretamente</li>
+<li>Strings: Devem ser inseridos entre '' ou ""</li>
+<li>Null: deve ser inserido com o token <code>null</code> sem aspas</li>
+</ul></li>
+<li><p>Inserindo dados</p>
+<ul>
+<li><p>Apesar de não ser necessário, é boa prática nomear as colunas a
+serem preenchidas. Isso garante duas coisas:</p>
+<ol>
+<li><p>Legibilidade do script</p></li>
+<li><p>Que a ordem em que as colunas estão gravadas no banco não
+importa, desde que elas sejam preenchidas no Script</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> nome_tabela(coluna1, coluna2, coluna3) <span class="kw">VALUES</span> (valor1, valor2, valor3);</span></code></pre></div></li>
+</ol>
+<p>Ou</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> nome_tabela(conluna3, coluna1, coluna2) <span class="kw">VALUES</span> (valor3, valor1, valor2);</span></code></pre></div></li>
+<li><p>De todo módo é importante se atentar aos nomes dos campos e
+quantidades de valores indicados na tabela, também é importante saber de
+quais tipos são os campos listados e inserir valores de tipo que
+correspondem ao campo</p></li>
+</ul>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> nome_tabela(colunaInteiro, colunaSTRING, colunaDATE) <span class="kw">VALUES</span> (<span class="dv">1</span>, <span class="st">&#39;Isso é uma string&#39;</span>, <span class="st">&#39;2023-06-28&#39;</span>);</span></code></pre></div></li>
+<li><p>Formas do insert - Utilizando o banco de dados criado</p>
+<ol>
+<li><p>Insert sem colunas especificadas</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> curso <span class="kw">VALUES</span> (</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;Técnico em Desenvolvimento de Sistemas&#39;</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;Prepara o aluno para exercer funções técnicas, como: administração do sistema de banco de dados, desenvolver software, programar rotinas de sistema utilizando linguagens e técnicas de programação, programação de sistemas para desktop e para web, entre outras atividades.&#39;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  );          </span></code></pre></div>
+<ul>
+<li>Dessa forma é necessário saber a ordem das colunas registrada na
+tabela. Nesse caso, sabemos que a ordem é:
+<ol>
+<li>id</li>
+<li>nome</li>
+<li>descricao</li>
+</ol></li>
+<li>Perceba que dessa forma, além de ser necessário seguir a ordem da
+tabela, precisamos especificar o campo id, apesar de ser um
+AUTO<sub>INCREMENT</sub>, pois no caso em que não especificamos quais
+campos queremos preencher <strong>TODOS</strong> os campos devem ser
+especificados, de outra forma o banco não saberia onde alocar cada
+valor</li>
+</ul></li>
+<li><p>Insert com colunas especificadas</p>
+<ul>
+<li>Forma mais comum e eficiente de fazer o INSERT, especificando os
+campos entre parenteses</li>
+</ul>
+<div class="sourceCode" id="cb8" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> curso(nome) <span class="kw">VALUES</span> (<span class="st">&#39;Técnico em Informática para Internet&#39;</span>);</span></code></pre></div>
+<ul>
+<li>Repare que, no nosso banco o valor do campo "descricao" pode ser
+<code>null</code></li>
+<li>Repare também que no campo acima, como especificamos o campo que
+queremos preencher outros campos da tabela serão preenchidos
+automaticamente. No caso o id sera auto incrementado e a descrição será
+<code>NULL</code>. Repare na consulta a seguir os valores:</li>
+</ul>
+<div class="sourceCode" id="cb9" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> curso</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>nome</th>
+<th>descricao</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Técnico em Desenvolvimento de Sistemas</td>
+<td>Prepara o aluno para exercer funções técnicas, como: administração
+do sistema de banco de dados, desenvolver software, programar rotinas de
+sistema utilizando linguagens e técnicas de programação, programação de
+sistemas para desktop e para web, entre outras atividades.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Técnico em Informática para Internet</td>
+<td>NULL</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>IMPORTATE:</strong> A coluna só sera preenchida
+automáticamente se o campo não for especificado como <strong>NOT
+NULL</strong>, se possuir algum <strong>DEFAULT</strong> ou se for
+<strong>AUTO<sub>INCREMENT</sub></strong> — Ver <a
+href="20230615174154-senac_definicao_de_dados.html">Senac: Definição de
+dados</a>. Se houver outros campos obrigatórios na tabela, mas que não
+foram especificados no script de inserção o SQL retorná um erro.</li>
+</ul></li>
+</ol></li>
+<li><p>Inserindo vários registros em apenas uma instrução</p>
+<ul>
+<li><p>Para incluir vários registros basta adicionar outros conjuntos de
+dados entre parenteses separaods por virgula</p>
+<div class="sourceCode" id="cb10" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> curso (nome) <span class="kw">VALUES</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>(<span class="st">&#39;Técnico em Administração&#39;</span>),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>(<span class="st">&#39;Técnico em Contabilidade&#39;</span>),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>(<span class="st">&#39;Técnico em Design de Interiores&#39;</span>);      </span></code></pre></div></li>
+<li><p>Verificando:</p></li>
+</ul>
+<div class="sourceCode" id="cb11" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> curso      </span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>nome</th>
+<th>descricao</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Técnico em Desenvolvimento de Sistemas</td>
+<td>Prepara o aluno para exercer funções técnicas, como: administração
+do sistema de banco de dados, desenvolver software, programar rotinas de
+sistema utilizando linguagens e técnicas de programação, programação de
+sistemas para desktop e para web, entre outras atividades.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Técnico em Informática para Internet</td>
+<td>NULL</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Técnico em Administração</td>
+<td>NULL</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Técnico em Contabilidade</td>
+<td>NULL</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Técnico em Design de Interiores</td>
+<td>NULL</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>Valores de data e hora</p>
+<ul>
+<li>Para inserir data e hora basta utilizar o formato 'YYYY-MM-DD' para
+datas (DATE), 'HH:MM:SS'(TIME) para horas e 'YYYY-MM-DD HH:MM:SS' para
+DATETIME
+<ul>
+<li>É importante frizar que o tanto data, quanto hora, quanto datahora
+devem ser mencionados entre '' ou seja, uma string</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb12" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> aluno (nome, sobrenome, data_nascimento) <span class="kw">VALUES</span> (<span class="st">&#39;Alice&#39;</span>, <span class="st">&#39;Gonçalves&#39;</span>, <span class="st">&#39;1998-10-18&#39;</span>);</span></code></pre></div>
+<ul>
+<li>Verificando:</li>
+</ul>
+<div class="sourceCode" id="cb13" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> aluno</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>nome</th>
+<th>sobrenome</th>
+<th>data<sub>nascimento</sub></th>
+<th>curso<sub>id</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Alice</td>
+<td>Gonçalves</td>
+<td>1998-10-18</td>
+<td>NULL</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Outro formato de DATE
+<ul>
+<li>O formato DATE também pode ser escrito como YY-MM-DD</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb14" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> aluno (nome, sobrenome, data_nascimento) <span class="kw">VALUES</span> (<span class="st">&#39;Eduardo&#39;</span>, <span class="st">&#39;Machado&#39;</span>, <span class="st">&#39;98-07-16&#39;</span>);</span></code></pre></div>
+<ul>
+<li>No entanto o valor de YY sera convertido para YYYY</li>
+</ul>
+<div class="sourceCode" id="cb15" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> aluno       </span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>nome</th>
+<th>sobrenome</th>
+<th>data<sub>nascimento</sub></th>
+<th>curso<sub>id</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Alice</td>
+<td>Gonçalves</td>
+<td>1998-10-18</td>
+<td>NULL</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Eduardo</td>
+<td>Machado</td>
+<td>1998-07-16</td>
+<td>NULL</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Da mesma forma o mês ou dia pode ser escrito com apenas um digito,
+mas será convertido para 2 automáticamente</li>
+</ul>
+<div class="sourceCode" id="cb16" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> aluno (nome, sobrenome, data_nascimento) <span class="kw">VALUES</span> (<span class="st">&#39;Vitória&#39;</span>, <span class="st">&#39;Prestes&#39;</span>, <span class="st">&#39;1997-2-15&#39;</span>);</span></code></pre></div>
+<ul>
+<li>Verificando:</li>
+</ul>
+<div class="sourceCode" id="cb17" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> aluno</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>nome</th>
+<th>sobrenome</th>
+<th>data<sub>nascimento</sub></th>
+<th>curso<sub>id</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Alice</td>
+<td>Gonçalves</td>
+<td>1998-10-18</td>
+<td>NULL</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Eduardo</td>
+<td>Machado</td>
+<td>1998-07-16</td>
+<td>NULL</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Vitória</td>
+<td>Prestes</td>
+<td>1997-02-15</td>
+<td>NULL</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>Inserção de registros com chaves estrangeiras</p>
+<blockquote>
+<p>Nos exemplos anteriores, foram cadastrados alguns alunos na tabela,
+mas não foram inseridos valores nos campos "curso<sub>id</sub>". Isso
+porque o campo "curso<sub>id</sub>" é um campo que referencia uma chave
+primária (primary key) de outra tabela. Ou seja, trata-se de um campo
+com chave estrangeira (foreign key).</p>
+</blockquote>
+<ul>
+<li><p>Tabelas com chave estrangeiras são chamadas de "tabelas filhas",
+enquanto a tabela com a chave primária referenciada é a "tabela
+pai".</p></li>
+<li><p>No caso de estudo a tabela <strong>aluno</strong> é filha da
+tabela <strong>curso</strong></p></li>
+<li><p>Se executarmos o comando</p>
+<div class="sourceCode" id="cb18" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">id</span>, nome <span class="kw">FROM</span> curso;</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>nome</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Técnico em Desenvolvimento de Sistemas</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Técnico em Informática para Internet</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Técnico em Administração</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Técnico em Contabilidade</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Técnico em Design de Interiores</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>Peceba que cada registro tem um identificador único em
+"id"</p></li>
+<li><p>Sendo assim podemos adicionar um desses "id"s como valor do campo
+"curso<sub>id</sub>" na tabela Aluno:</p>
+<div class="sourceCode" id="cb19" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> aluno (nome, curso_id) <span class="kw">VALUES</span> (<span class="st">&#39;Alex&#39;</span>, <span class="dv">1</span>);        </span></code></pre></div></li>
+<li><p>Verificando:</p>
+<div class="sourceCode" id="cb20" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> aluno</span></code></pre></div></li>
+</ul></li>
+<li><p>A entrada 4 possui como valor de "curso<sub>id</sub>" o numero 1,
+indicando portanto que esse campo referencia a entrada de "id" 1 na
+tabela curso (Técnico em Desenvolvimento de Sistemas)</p></li>
+<li><p>Perceba no entanto que se adicionarmos um valor não-existente em
+<strong>curso</strong> como valor do campo "curso<sub>id</sub>" um erro
+será gerado</p></li>
+</ul>
+<div class="sourceCode" id="cb21" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> aluno (nome, curso_id) <span class="kw">VALUES</span> (<span class="st">&#39;Ana&#39;</span>, <span class="dv">6</span>); </span></code></pre></div>
+<ul>
+<li><p>O resultado desse comando é:</p>
+<pre class="example"><code>ERROR 1452 (23000) at line 2: Cannot add or update a child row: a foreign key constraint fails (`senacEstudo`.`aluno`, CONSTRAINT `aluno_ibfk_1` FOREIGN KEY (`curso_id`) REFERENCES `curso` (`id`))
+</code></pre></li>
+</ul></li>
+</ol>
+<h3 id="atualização-de-dados-update">Atualização de dados — UPDATE</h3>
+<ul>
+<li><p>O comando <strong>UPDATE</strong> é responsável por atualizar
+dados já armazenados em uma tabela de banco de dados.</p>
+<blockquote>
+<p>Esse comando tem uma das funções mais importantes da linguagem SQL:
+manter os dados atualizados. Porém, por manipular diretamente dados já
+existentes no banco de dados, o uso incorreto desse comando pode
+resultar em perdas de dados significativos. Por isso, é preciso muito
+cuidado na execução desse comando.</p>
+</blockquote></li>
+<li><p>Comando update básico</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> nome_da_tabela <span class="kw">SET</span> coluna1 <span class="op">=</span> novo_valor1, coluna2 <span class="op">=</span> novo_valor2 <span class="kw">WHERE</span> condição</span></code></pre></div></li>
+<li><p>Destrinchando:</p>
+<ul>
+<li><strong>UPDATE</strong>: indica o update e seleciona a tabela a ser
+modificiada (nome<sub>databela</sub>)</li>
+<li><strong>SET</strong>: indica quais colunas e valores devem ser
+editados (coluna1=novo<sub>valor1</sub>,
+coluna2=novo<sub>valor2</sub>)</li>
+<li><strong>WHERE</strong> denota em quais condições a alteração deve
+ser feita, condições podem ser concatenadas com os operadores
+<strong>AND</strong> ou <strong>OR</strong></li>
+</ul></li>
+<li><p>Exemplificando:</p>
+<ul>
+<li><p>Exemplo 1:</p>
+<div class="sourceCode" id="cb24" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> aluno <span class="kw">SET</span> curso_id <span class="op">=</span> <span class="dv">2</span> <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">1</span>        </span></code></pre></div></li>
+<li><p>Verificando:</p>
+<div class="sourceCode" id="cb25" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> aluno       </span></code></pre></div></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>nome</th>
+<th>sobrenome</th>
+<th>data<sub>nascimento</sub></th>
+<th>curso<sub>id</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Alice</td>
+<td>Gonçalves</td>
+<td>1998-10-18</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Eduardo</td>
+<td>Machado</td>
+<td>1998-07-16</td>
+<td>NULL</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Vitória</td>
+<td>Prestes</td>
+<td>1997-02-15</td>
+<td>NULL</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Alex</td>
+<td>NULL</td>
+<td>NULL</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>Exemplo 2:</p>
+<div class="sourceCode" id="cb26" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> aluno <span class="kw">SET</span> curso_id <span class="op">=</span> <span class="dv">3</span> <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">2</span> <span class="kw">OR</span> nome <span class="op">=</span> <span class="ot">&quot;Vitória&quot;</span>  </span></code></pre></div></li>
+<li><p>Verificando:</p>
+<div class="sourceCode" id="cb27" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> aluno </span></code></pre></div></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>nome</th>
+<th>sobrenome</th>
+<th>data<sub>nascimento</sub></th>
+<th>curso<sub>id</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Alice</td>
+<td>Gonçalves</td>
+<td>1998-10-18</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Eduardo</td>
+<td>Machado</td>
+<td>1998-07-16</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Vitória</td>
+<td>Prestes</td>
+<td>1997-02-15</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Alex</td>
+<td>NULL</td>
+<td>NULL</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>Exemplo 3:</p>
+<div class="sourceCode" id="cb28" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> aluno <span class="kw">SET</span> sobrenome <span class="op">=</span> <span class="ot">&quot;Telles&quot;</span>, data_nascimento <span class="op">=</span> <span class="st">&#39;1992-12-15&#39;</span> <span class="kw">WHERE</span> sobrenome <span class="kw">IS</span> <span class="kw">NULL</span> <span class="kw">AND</span> data_nascimento <span class="kw">IS</span> <span class="kw">NULL</span>        </span></code></pre></div></li>
+<li><p>Verificando</p>
+<div class="sourceCode" id="cb29" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> aluno           </span></code></pre></div></li>
+</ul></li>
+</ul>
+<ol>
+<li><p>Update em uma unica coluna</p>
+<ul>
+<li><p>Segue a forma</p>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> nome_tabela <span class="kw">SET</span> coluna1 <span class="op">=</span> valor1 <span class="kw">WHERE</span> condição</span></code></pre></div></li>
+</ul></li>
+<li><p>Update em várias colunas</p>
+<ul>
+<li><p>Mesma formula porém com pares coluna-valor separados por
+virgula</p>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> nome_tabela <span class="kw">SET</span> coluna1 <span class="op">=</span> valor1, coluna2 <span class="op">=</span> valor2 <span class="kw">WHERE</span> condição</span></code></pre></div></li>
+</ul></li>
+<li><p>Update em TODOS os registros</p>
+<ul>
+<li>A clausula <strong>WHERE</strong> no comando update é opcional,
+sendo assim é possivel não especificar condição alguma para o comando,
+fazendo com que ele execute as alterações em todos os registros da
+tabela</li>
+</ul>
+<div class="sourceCode" id="cb32" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> curso <span class="kw">SET</span> descricao <span class="op">=</span> <span class="st">&#39;Em breve...&#39;</span>        </span></code></pre></div>
+<ul>
+<li><p>Verificando:</p>
+<div class="sourceCode" id="cb33" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> curso</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>nome</th>
+<th>descricao</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Técnico em Desenvolvimento de Sistemas</td>
+<td>Em breve…</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Técnico em Informática para Internet</td>
+<td>Em breve…</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Técnico em Administração</td>
+<td>Em breve…</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Técnico em Contabilidade</td>
+<td>Em breve…</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Técnico em Design de Interiores</td>
+<td>Em breve…</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<ul>
+<li><strong>IMPORTANTE:</strong> O Mysql Workbench, por padrão, vem com
+uma opção de segurança habilitada que não permite a alteração ou deleção
+de diversas linhas ou tabelas ao mesmo tempo. Para desabilitar essa
+configuração siga <strong>Edit &gt; Preferences &gt; SQL Editor</strong>
+e desmarque a caixa <strong>Safe Updates</strong> e depois
+<strong>Reconecte</strong> ao banco. Como estou executando os comando
+diretamente do Org-Babel não precisei executar esses passos</li>
+</ul></li>
+</ol>
+<h3 id="exclusão-de-dados-delete">Exclusão de dados — DELETE</h3>
+<ul>
+<li><p>O comando DELETE exclui uma linha de uma tabela, eliminando um
+registro no banco de dados.</p></li>
+<li><p>A sintaxe básica do comando DELETE segue a seguinte forma:</p>
+<div class="sourceCode" id="cb34"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> nome_da_tabele <span class="kw">WHERE</span> condição</span></code></pre></div></li>
+<li><p>Da mesma forma que em <strong>UPDATE</strong> a clausula
+<strong>WHERE</strong> indica em quais condições o comando deve ser
+executado.</p>
+<ul>
+<li><p>Exemplo:</p>
+<div class="sourceCode" id="cb35" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> aluno <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">2</span>   </span></code></pre></div></li>
+<li><p>Verificando:</p>
+<div class="sourceCode" id="cb36" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> aluno       </span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>nome</th>
+<th>sobrenome</th>
+<th>data<sub>nascimento</sub></th>
+<th>curso<sub>id</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Alice</td>
+<td>Gonçalves</td>
+<td>1998-10-18</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>Vitória</td>
+<td>Prestes</td>
+<td>1997-02-15</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>Alex</td>
+<td>Telles</td>
+<td>1992-12-15</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Repare que o aluno de id 2 foi deletado de banco</li>
+</ul></li>
+</ul></li>
+</ul>
+<ol>
+<li><p>Casos de exclusão:</p>
+<ol>
+<li><p>Exculsão simples:</p>
+<ul>
+<li>Caso da exclusão anterior: uma linha deve ser removida com uma
+condição especifica, no exemplo a condição foi id = 2</li>
+</ul></li>
+<li><p>Exclusão utilizando 2 ou mais condições</p>
+<ul>
+<li>Condições concatenadas pelos operadores <strong>AND</strong> e
+<strong>OR</strong></li>
+</ul>
+<div class="sourceCode" id="cb37"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> nome_da_tabela <span class="kw">WHERE</span> nome<span class="op">=</span><span class="ot">&quot;Ronaldo&quot;</span> <span class="kw">AND</span> sobrenome<span class="op">=</span><span class="ot">&quot;Nazário&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> nome_da_tabela <span class="kw">WHERE</span> username<span class="op">=</span><span class="ot">&quot;sealmp4&quot;</span> <span class="kw">OR</span> username<span class="op">=</span><span class="ot">&quot;Kopur&quot;</span></span></code></pre></div></li>
+<li><p>Exclusão com chave estrangeira</p>
+<ul>
+<li>Pensando na tabela senacEstudo, imagine que o curso de Tecnico em
+Desenvolvimento de Sistemas deixou de existir, sendo assim, não há mais
+alunos desse curso e gostariamos de excluir do banco tanto o curso como
+os alunos matriculados no curso. Nesse caso há uma deleção com chave
+estrangeira, ou melhor, um DELETE Cascade. Isso significa que devemos
+excluir uma entrada que contem uma <strong>chave primária</strong> e
+também todas as entradas em outras tabelas que possuem essa chave
+primária como <strong>chave estrangeira</strong></li>
+<li>Esse comportamento não é permitido pelo SQL a não ser que, na
+criação de uma chave estrangeira seja especificado que o campo deve se
+comportar como DELETE CASCADE</li>
+<li>Exemplo:
+<ul>
+<li>Se simplesmente executarmos</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb39" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> curso <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">1</span>; </span></code></pre></div>
+<p>Receberemos o seguinte erro:</p>
+<pre class="example"><code>ERROR 1451 (23000) at line 2: Cannot delete or update a parent row: a foreign key constraint fails (`senacEstudo`.`aluno`, CONSTRAINT `aluno_ibfk_1` FOREIGN KEY (`curso_id`) REFERENCES `curso` (`id`))
+</code></pre>
+<ol>
+<li><p>Criando uma tabela que permite o DELETE CASCADE</p>
+<ul>
+<li>Só é possivel utilizar o DELETE CASCADE se criarmos uma tabela que
+permite o uso da função, ou se alterarmos uma tabela já existente para
+adicionar o comportamento
+<ul>
+<li>Criando a tabela</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb41" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> aluno2 (</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="kw">id</span> <span class="dt">int</span> AUTO_INCREMENT,</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>nome <span class="dt">varchar</span>(<span class="dv">30</span>),</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>sobrenome <span class="dt">varchar</span>(<span class="dv">30</span>),</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>data_nascimento <span class="dt">date</span>,</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>curso_id <span class="dt">int</span>,</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="kw">PRIMARY</span> <span class="kw">KEY</span> (<span class="kw">id</span>),</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FOREIGN</span> <span class="kw">KEY</span> (curso_id) <span class="kw">REFERENCES</span> curso(<span class="kw">id</span>) <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">CASCADE</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+<div class="captioned-content">
+<div class="caption">
+utilizaremos essa tabela para testar o DELETE CASCADE
+</div>
+<div class="sourceCode" id="cb42" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> curso (<span class="kw">id</span>, nome) <span class="kw">VALUES</span> (<span class="dv">12</span>, <span class="st">&#39;Técnico em Informática&#39;</span>);</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INSERT</span> <span class="kw">INTO</span> aluno2 (nome, curso_id) <span class="kw">VALUES</span> (<span class="st">&#39;Daltron&#39;</span>, <span class="dv">12</span>), (<span class="st">&#39;Wilson&#39;</span>, <span class="dv">12</span>);     </span></code></pre></div>
+</div>
+<ul>
+<li>Vendo as tabelas:</li>
+</ul>
+<div class="sourceCode" id="cb43" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> curso;   </span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>nome</th>
+<th>descricao</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Técnico em Desenvolvimento de Sistemas</td>
+<td>Em breve…</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Técnico em Informática para Internet</td>
+<td>Em breve…</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Técnico em Administração</td>
+<td>Em breve…</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Técnico em Contabilidade</td>
+<td>Em breve…</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Técnico em Design de Interiores</td>
+<td>Em breve…</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>Técnico em Informática</td>
+<td>NULL</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb44" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> aluno2;              </span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>nome</th>
+<th>sobrenome</th>
+<th>data<sub>nascimento</sub></th>
+<th>curso<sub>id</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Daltron</td>
+<td>NULL</td>
+<td>NULL</td>
+<td>12</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Wilson</td>
+<td>NULL</td>
+<td>NULL</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Com o <strong>ON DELETE CASCADE</strong> habilitado no campo
+"curso<sub>id</sub>" da tabela aluno2 podemos agora deletar o curso com
+id 12 e ver as alterações na tabela aluno2 e curso</li>
+</ul>
+<div class="sourceCode" id="cb45" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> curso <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">12</span>   </span></code></pre></div>
+<div class="sourceCode" id="cb46" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> aluno2     </span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>nome</th>
+<th>sobrenome</th>
+<th>data<sub>nascimento</sub></th>
+<th>curso<sub>id</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>Wilson</td>
+<td>NULL</td>
+<td>NULL</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb47" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> curso  </span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>nome</th>
+<th>descricao</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Técnico em Desenvolvimento de Sistemas</td>
+<td>Em breve…</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Técnico em Informática para Internet</td>
+<td>Em breve…</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Técnico em Administração</td>
+<td>Em breve…</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Técnico em Contabilidade</td>
+<td>Em breve…</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Técnico em Design de Interiores</td>
+<td>Em breve…</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>Sobre o DELETE CASCADE</p>
+<blockquote>
+<p>Apesar de muito eficiente, o uso da exclusão em cascata pode
+comprometer a exclusão de dados muito sensíveis, já que todos os
+registros que estiverem referenciando com chave estrangeira o registro a
+ser excluído também serão apagados. Portanto, ainda falando da exclusão
+de registros referenciados por chaves estrangeiras, existem outras
+abordagens para esse cenário.</p>
+</blockquote>
+<ul>
+<li>Formas indicadas
+<ul>
+<li>Atualizar todos os campos de curso<sub>id</sub>, os steando para
+<code>NULL</code> antes de fazer uma exclusão:</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb48"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> aluno <span class="kw">SET</span> curso_id <span class="op">=</span> <span class="kw">NULL</span> <span class="kw">WHERE</span> curso_id <span class="op">=</span> <span class="dv">1</span>;</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">DELETE</span> curso <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">1</span>;</span></code></pre></div></li>
+</ol></li>
+<li><p>Exclusão preservando o registro no banco de dados</p>
+<ul>
+<li>Antes de continuar é importante adicionar alguns campos nas tabelas
+<strong>aluno</strong> e <strong>curso</strong></li>
+</ul>
+<div class="sourceCode" id="cb49" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> aluno <span class="kw">ADD</span> <span class="kw">COLUMN</span> status <span class="dt">char</span>(<span class="dv">1</span>) <span class="kw">DEFAULT</span> <span class="st">&#39;A&#39;</span>;</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> curso <span class="kw">ADD</span> <span class="kw">COLUMN</span> status <span class="dt">char</span>(<span class="dv">1</span>) <span class="kw">DEFAULT</span> <span class="st">&#39;A&#39;</span>; </span></code></pre></div>
+<ul>
+<li><p>Verificando:</p>
+<div class="sourceCode" id="cb50" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> aluno;     </span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>nome</th>
+<th>sobrenome</th>
+<th>data<sub>nascimento</sub></th>
+<th>curso<sub>id</sub></th>
+<th>status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Alice</td>
+<td>Gonçalves</td>
+<td>1998-10-18</td>
+<td>2</td>
+<td>A</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>Vitória</td>
+<td>Prestes</td>
+<td>1997-02-15</td>
+<td>3</td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>Alex</td>
+<td>Telles</td>
+<td>1992-12-15</td>
+<td>1</td>
+<td>A</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<div class="sourceCode" id="cb51" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> curso           </span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>nome</th>
+<th>descricao</th>
+<th>status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Técnico em Desenvolvimento de Sistemas</td>
+<td>Em breve…</td>
+<td>A</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Técnico em Informática para Internet</td>
+<td>Em breve…</td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Técnico em Administração</td>
+<td>Em breve…</td>
+<td>A</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Técnico em Contabilidade</td>
+<td>Em breve…</td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Técnico em Design de Interiores</td>
+<td>Em breve…</td>
+<td>A</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Para preservar os registros em banco de dados deve-se evitar ao
+máximo a <strong>exclusão</strong> de dados. Para isso utilizaremos a
+coluna "status", para indicar a situação de um registro. No exemplo
+utilizaremos os Status
+<ul>
+<li><strong>A</strong>: para ativo</li>
+<li><strong>I</strong>: para inativo</li>
+<li><strong>F</strong>: para um aluno que se formou</li>
+</ul></li>
+<li>Agora, ao invés de <strong>deletar</strong> o registro do curso e do
+aluno podemos <strong>alterar</strong> os seus respectivos Status,
+preservando assim a informação no banco.</li>
+<li>Suponha novamente que o curso de Tecnico em desenvolvimento de
+Sistemas não existe mais e precisamos alterar o status dos alunos que
+faziam esse curso</li>
+</ul>
+<div class="sourceCode" id="cb52" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> curso <span class="kw">SET</span> status <span class="op">=</span> <span class="st">&#39;I&#39;</span> <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">1</span>;</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> aluno <span class="kw">SET</span> status <span class="op">=</span> <span class="st">&#39;I&#39;</span> <span class="kw">WHERE</span> curso_id <span class="op">=</span> <span class="dv">1</span></span></code></pre></div>
+<ul>
+<li><p>Verificando:</p>
+<div class="sourceCode" id="cb53" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> curso;     </span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>nome</th>
+<th>descricao</th>
+<th>status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Técnico em Desenvolvimento de Sistemas</td>
+<td>Em breve…</td>
+<td>I</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Técnico em Informática para Internet</td>
+<td>Em breve…</td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Técnico em Administração</td>
+<td>Em breve…</td>
+<td>A</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Técnico em Contabilidade</td>
+<td>Em breve…</td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Técnico em Design de Interiores</td>
+<td>Em breve…</td>
+<td>A</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<div class="sourceCode" id="cb54" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> aluno      </span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>nome</th>
+<th>sobrenome</th>
+<th>data<sub>nascimento</sub></th>
+<th>curso<sub>id</sub></th>
+<th>status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Alice</td>
+<td>Gonçalves</td>
+<td>1998-10-18</td>
+<td>2</td>
+<td>A</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>Vitória</td>
+<td>Prestes</td>
+<td>1997-02-15</td>
+<td>3</td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>Alex</td>
+<td>Telles</td>
+<td>1992-12-15</td>
+<td>1</td>
+<td>I</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>Isso também é util em situações onde apenas a tabela filha
+precisa ser alterada. Suponha que o aluno de id = 1 (Alice) se formou e
+o aluno de id = 2 (Vitória) desistiu do curso. Ainda assim é imporante
+manter a informação de que esses alunos um dia fizeram determinado
+curso, sendo assim podemos apenas alterar o campo "status" de cada aluno
+sem precisar alterar a tabela pai ou excluir a informação de que curso
+foi cursado por esse aluno</p>
+<div class="sourceCode" id="cb55" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> aluno <span class="kw">SET</span> status <span class="op">=</span> <span class="st">&#39;F&#39;</span> <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">1</span>;</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> aluno <span class="kw">SET</span> status <span class="op">=</span> <span class="st">&#39;I&#39;</span> <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">3</span>;         </span></code></pre></div></li>
+<li><p>Verificando:</p>
+<div class="sourceCode" id="cb56" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senacEstudo"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> aluno;        </span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>nome</th>
+<th>sobrenome</th>
+<th>data<sub>nascimento</sub></th>
+<th>curso<sub>id</sub></th>
+<th>status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Alice</td>
+<td>Gonçalves</td>
+<td>1998-10-18</td>
+<td>2</td>
+<td>F</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>Vitória</td>
+<td>Prestes</td>
+<td>1997-02-15</td>
+<td>3</td>
+<td>I</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>Alex</td>
+<td>Telles</td>
+<td>1992-12-15</td>
+<td>1</td>
+<td>I</td>
+</tr>
+</tbody>
+</table></li>
+</ul></li>
+</ol></li>
+</ol>
 </body>
 </html>
