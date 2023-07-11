@@ -920,14 +920,217 @@ class="sourceCode sql"><code class="sourceCode sql"><span id="cb18-1"><a href="#
 produtos, incluindo também os produtos que não tiveram nenhuma venda.
 Lembrando que:
 <ul>
-<li>A tabela produtos contem 7 produtos cadastrados</li>
-<li>Apenas dois produtos tem registros na tabela de vendas - ver <a
+<li><p>A tabela produtos contem 7 produtos cadastrados</p></li>
+<li><p>Apenas dois produtos tem registros na tabela de vendas - ver <a
 href="20230615174247-senac_consulta_de_dados.html">Senac: Consulta de
-dados</a></li>
+dados</a></p></li>
+<li><p>Juntando as duas tabelas e obtendo as informações:</p>
+<div class="sourceCode" id="cb19" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="super"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> A.idProduto, A.nomeProduto, <span class="fu">SUM</span>(V.quantidadeVendida<span class="op">*</span>V.valorVendido) <span class="kw">AS</span> TotalVendido <span class="kw">FROM</span> Produtos <span class="kw">AS</span> A <span class="kw">LEFT</span> <span class="kw">JOIN</span> Vendas <span class="kw">AS</span> V <span class="kw">ON</span> A.idProduto <span class="op">=</span> V.idProduto <span class="kw">GROUP</span> <span class="kw">BY</span> A.idProduto    </span></code></pre></div></li>
+</ul></li>
+</ul>
+<ul>
+<li>Destrinchando:
+<ul>
+<li>Mantem todos os registros dos produtos e anexa o ID do produto, nome
+e somatório das vendas</li>
+<li>Se utilizado um <strong>INNER JOIN</strong> - ou
+<strong>JOIN</strong> - seriam listados <strong>APENAS</strong> os
+produtos com vendas.</li>
+<li>Utilizando o <strong>LEFT JOIN</strong> são consultados tabém os
+produtos sem vendas, inserido um valor <strong>NULL</strong> onde não há
+registros compativeis com a condição <strong>ON A.idProduto =
+V.idProduto</strong></li>
+<li>A Clausula <strong>GROUP BY</strong> é responsável por agrupar os
+dados, ou seja, agrupar os produtos pelo ID. Ela será melhor explicada
+mais a frente</li>
 </ul></li>
 </ul></li>
 </ul></li>
+<li><p>RIGHT JOIN</p>
+<ul>
+<li>Faz a mesma coisa que o LEFT JOIN porém através da tabela a
+esquerda</li>
+</ul>
+<div class="sourceCode" id="cb20" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="super"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> A.idProduto, A.nomeProduto, <span class="fu">sum</span>(V.quantidadeVendida<span class="op">*</span>V.valorVendido) <span class="kw">AS</span> TotalVendido <span class="kw">FROM</span> Produtos A <span class="kw">RIGHT</span> <span class="kw">JOIN</span> Vendas V <span class="kw">ON</span> A.idProduto <span class="op">=</span> V.idProduto <span class="kw">GROUP</span> <span class="kw">BY</span> A.idProduto        </span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>idProduto</th>
+<th>nomeProduto</th>
+<th>TotalVendido</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Refrigerante</td>
+<td>16.50</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Arroz 5kg</td>
+<td>212.50</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>O Motivo de uso de LEFT e RIGHT JOINS</p>
+<ul>
+<li>Combina registros de duas tabelas mesmo que eles não possam ser
+encontrados em uma delas já que seguem o os agrupamentos:</li>
+</ul>
+<p><img src="./static/senac_left_join.png" /> <img
+src="./static/senac_right_join.png" /></p></li>
 </ol></li>
 </ol>
+<h2 id="união---union">União - UNION</h2>
+<ul>
+<li>Comandos <strong>UNION</strong> e <strong>UNION ALL</strong> são
+utilizados para obter dados de várias tabelas</li>
+<li>O comando <strong>UNION</strong> combina <strong>linhas</strong> da
+tabela de duas consultas diferentes. Ao contrário do
+<strong>JOIN</strong>, que combina <strong>colunas</strong> de tabelas
+diferentes, o <strong>UNION</strong> combina <strong>linhas</strong> de
+tabelas diferentes</li>
+</ul>
+<h3 id="uinon-x-union-all">UINON x UNION ALL</h3>
+<table>
+<thead>
+<tr class="header">
+<th>UNION</th>
+<th>UNION ALL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Retorna registros unicos em ambas as tabelas</td>
+<td>Retorna todos os registros, Incluindo registros que possam estar em
+ambas as tabelas, ou seja, duplicados</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="utilizando-o-union">Utilizando o UNION</h3>
+<ul>
+<li><p>Sintaxe genérica:</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> coluna1, coluna2 <span class="kw">FROM</span> tabelaA <span class="kw">WHERE</span> condição <span class="kw">UNION</span> <span class="kw">SELECT</span> coluna1, coluna2 <span class="kw">FROM</span> tabelaB <span class="kw">WHERE</span> condição</span></code></pre></div></li>
+<li><p>Para unir duas tabelas existem alguns requisistos</p>
+<ul>
+<li>O numero de colunas usadas na primeira consulta deve ser
+<strong>igual</strong> em ambas as consultas e devem corresponder aos
+<strong>mesmos tipos de dados</strong></li>
+</ul></li>
+</ul>
+<h3 id="preparando-o-ambiente-e-exemplificando">Preparando o ambiente e
+exemplificando</h3>
+<ul>
+<li>Criar a tabela funcionário</li>
+</ul>
+<div class="sourceCode" id="cb22" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="super"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> Funcionario ( idFuncionario <span class="dt">int</span>(<span class="dv">11</span>) auto_increment, nomeFuncionario <span class="dt">varchar</span>(<span class="dv">200</span>), cpfFuncionario <span class="dt">varchar</span>(<span class="dv">11</span>), cidadeFuncionario <span class="dt">varchar</span>(<span class="dv">200</span>), <span class="kw">PRIMARY</span> <span class="kw">KEY</span>(idFuncionario)); </span></code></pre></div>
+<ul>
+<li>Populando e verificando</li>
+</ul>
+<div class="sourceCode" id="cb23" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="super"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> Funcionario (nomeFuncionario,cpfFuncionario,cidadeFuncionario) <span class="kw">VALUES</span> (<span class="st">&#39;João dos Santos&#39;</span>,<span class="st">&#39;10000000001&#39;</span>,<span class="st">&#39;São Paulo&#39;</span>), (<span class="st">&#39;Maria da Silva&#39;</span>,<span class="st">&#39;20000000002&#39;</span>,<span class="st">&#39;Rio de Janeiro&#39;</span>), (<span class="st">&#39;Ana Maria&#39;</span>,<span class="st">&#39;30000000003&#39;</span>,<span class="st">&#39;Brasília&#39;</span>), (<span class="st">&#39;Brasil Alimentos&#39;</span>,<span class="st">&#39;40000000004&#39;</span>,<span class="st">&#39;Cuiabá&#39;</span>);</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> Funcionario </span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>idFuncionario</th>
+<th>nomeFuncionario</th>
+<th>cpfFuncionario</th>
+<th>cidadeFuncionario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>João dos Santos</td>
+<td>10000000001</td>
+<td>São Paulo</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Maria da Silva</td>
+<td>20000000002</td>
+<td>Rio de Janeiro</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Ana Maria</td>
+<td>30000000003</td>
+<td>Brasília</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Brasil Alimentos</td>
+<td>40000000004</td>
+<td>Cuiabá</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>Exemplificando em conjunto com a tabela Fornecedor</p>
+<div class="sourceCode" id="cb24" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="super"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nomeFuncionario <span class="kw">FROM</span> Funcionario <span class="kw">UNION</span> <span class="kw">SELECT</span> nomeFornecedor <span class="kw">FROM</span> Fornecedor <span class="kw">ORDER</span> <span class="kw">BY</span> nomeFuncionario      </span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>nomeFuncionario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Alimentos do Centro-Oeste</td>
+</tr>
+<tr class="even">
+<td>Ana Maria</td>
+</tr>
+<tr class="odd">
+<td>Brasil Alimentos</td>
+</tr>
+<tr class="even">
+<td>João dos Santos</td>
+</tr>
+<tr class="odd">
+<td>Laticínios Norte Minas</td>
+</tr>
+<tr class="even">
+<td>Maria da Silva</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<h2 id="intersect">Intersect</h2>
+<ul>
+<li><p>O operador <strong>INTERSECT</strong> retorna
+<strong>apenas</strong> linhas distintas de duas ou mais
+consultas.</p></li>
+<li><p>Sintaxe geral</p>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> coluta1 <span class="kw">FROM</span> tabelaA <span class="kw">INTERSECT</span> <span class="kw">SELECT</span> coluna1 <span class="kw">FROM</span> tabelaB</span></code></pre></div></li>
+<li><p>Regras para o uso</p>
+<ul>
+<li>A ordem e o numero de colunas na lista de seleção das consultas
+devem ser os mesmos</li>
+<li>Os tipos de dados devem ser compativeis</li>
+</ul></li>
+</ul>
 </body>
 </html>
