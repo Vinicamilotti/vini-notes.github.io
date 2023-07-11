@@ -178,8 +178,17 @@ href="20230615180516-senac_modulo_ii_home.html">Senac: Modulo II -
 Home</a></h2>
 <h1 id="utilizando">Utilizando</h1>
 <ul>
-<li>O Curso consistem em 4 Módulos</li>
-<li>Cada módulo é dividido em UCs e PIs</li>
+<li><p>O Curso consiste em 4 Módulos</p></li>
+<li><p>Cada módulo é dividido em UCs e PIs</p></li>
+<li><p>Cada módulo tem uma página com o o formato:</p>
+<pre class="example"><code>Senac: Modulo X - Home
+</code></pre></li>
+<li><p>Dentro de cada página de módulo existem links para as subpáginas
+de UCs seguindo o formato:</p>
+<pre class="example"><code>[UCxx] Link/Nome da UC
+</code></pre></li>
+<li><p>Cada UC tem sua organização interna</p></li>
+<li><p>Cada modulo tem uma subpágina</p></li>
 </ul>
 <h2 id="legenda">Legenda</h2>
 <ul>
@@ -191,5 +200,34 @@ curso, não há textos, devem ser utilizados os conteúdos do módulo para
 concluir o projeto. Identificado pela sigla PI seguida do numero. Ex:
 [PI01]</li>
 </ul>
+<h2 id="observações">Observações</h2>
+<ol>
+<li>Os 2 primeiros módulos contem menos anotações pelos seguintes
+motivos:
+<ol>
+<li>Modulos muito introdutórios</li>
+<li>O sistema de anotações ainda não estava claro para mim na época</li>
+</ol></li>
+<li>Anotações sobre atividades podem estar incompletas, já que são
+utilizadas mais como guias</li>
+<li>A formatação pode ficar estranha em alguns momentos, já que é feita
+uma conversão automática de plaintext ( <a
+href="https://orgmode.org/">Org files</a>) para html utilizando <a
+href="https://pandoc.org/">Pandoc</a> <a href="#fn1"
+class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a></li>
+</ol>
+<h1 id="footnotes">Footnotes</h1>
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>A conversão é feita utilizando Pandoc pois ele é mais
+capaz no processo de parsing de links já que os links entre notas são
+criadas utilizando <a href="https://www.orgroam.com/">org-roam</a> ao
+invés de links diretos.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
 </body>
 </html>
