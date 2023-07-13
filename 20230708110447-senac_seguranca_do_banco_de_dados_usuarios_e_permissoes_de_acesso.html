@@ -558,5 +558,508 @@ class="sourceCode sql"><code class="sourceCode sql"><span id="cb19-1"><a href="#
 GRANT USAGE ON *.* TO `teste`@`localhost` IDENTIFIED BY PASSWORD &#39;*0971389F8E7F1AEB999104BDA7A0FA145087F348&#39;
 </code></pre>
 <h2 id="roles">Roles</h2>
+<ul>
+<li>Role - função, papel - é uma coleção nomeada de privilégios. Cada
+role pode ter privilegios concedidos e revogado. Uma usuário pode
+receber uma role e, a partir dai, possuir os privilégios da role
+recebida.
+<ul>
+<li>Funciona como uma prédefinição de atributos para cada papel de
+usuário que consome o banco de dados.</li>
+<li>Exemplo: 1 gerente e 2 funcionários do financeiro consomem o banco.
+Ao invés de dar privilegios um a um criamos 2 roles, uma para gerente,
+que posusi todos os privilégios, e uma para o financeiro, que possui
+apenas privilégios relacionados a area. Agora podemos atribuir essas
+roles a cada funcionário. Além disso se os funcionários mudarem podemos
+também atribuir as roles aos novos funcionários.</li>
+</ul></li>
+</ul>
+<h3 id="preparando-o-ambiente">Preparando o ambiente</h3>
+<ul>
+<li><p>Para os próximos exemplos criaremos uma nova database
+'app<sub>db</sub>'</p>
+<div class="sourceCode" id="cb21" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> app_db</span></code></pre></div></li>
+<li><p>Também criaremos alguns usuários</p>
+<div class="sourceCode" id="cb22" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="fu">USER</span> <span class="st">&#39;usuario_desenvolvedor&#39;</span>@<span class="st">&#39;localhost&#39;</span>;</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="fu">USER</span> <span class="st">&#39;usuario_leitura&#39;</span>@<span class="st">&#39;localhost&#39;</span>;</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="fu">USER</span> <span class="st">&#39;usuario_escrita&#39;</span>@<span class="st">&#39;localhost&#39;</span>;</span></code></pre></div></li>
+</ul>
+<h3 id="criando-uma-role">Criando uma role:</h3>
+<ul>
+<li><p>A sintaxe básica que criação de uma role é:</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">ROLE</span> <span class="st">&#39;nome_role_1&#39;</span>, <span class="st">&#39;nome_role_2&#39;</span>, <span class="st">&#39;nome_role_x&#39;</span></span></code></pre></div></li>
+<li><p>Exemplo</p>
+<div class="sourceCode" id="cb24" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">ROLE</span> <span class="st">&#39;app_developer&#39;</span>, <span class="st">&#39;app_read&#39;</span>, <span class="st">&#39;app_write&#39;</span>;       </span></code></pre></div></li>
+</ul>
+<h3 id="atribuindo-privilégios-a-cada-role">Atribuindo privilégios a
+cada role</h3>
+<ul>
+<li><p>Funciona da exata mesma forma que atribuir privilegios a usuário,
+no entanto n utilizamos o endereço. Sintaxe básica:</p>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> privilegio <span class="kw">ON</span> <span class="kw">database</span>.tabela <span class="kw">TO</span> <span class="st">&#39;nome_role&#39;</span>; </span></code></pre></div></li>
+<li><p>Exemplo: atribuindo privilégios diferentes as roles
+'app<sub>developer</sub>', 'app<sub>read</sub>',
+'app<sub>write</sub>'</p></li>
+</ul>
+<div class="sourceCode" id="cb26" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">ALL</span> <span class="kw">ON</span> app_db.<span class="op">*</span> <span class="kw">TO</span> <span class="st">&#39;app_developer&#39;</span>;</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">SELECT</span> <span class="kw">ON</span> app_db.<span class="op">*</span> <span class="kw">TO</span> <span class="st">&#39;app_read&#39;</span>;</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">INSERT</span>, <span class="kw">UPDATE</span>, <span class="kw">DELETE</span> <span class="kw">ON</span> app_db.<span class="op">*</span> <span class="kw">TO</span> <span class="st">&#39;app_write&#39;</span>;</span></code></pre></div>
+<h3 id="atribuindo-roles-a-usuários">Atribuindo Roles a usuários</h3>
+<ul>
+<li><p>Quando criamos uma role ela pode substituir os privilégio que
+queremos conceder a um usuário. Sintaxe básica:</p>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="st">&#39;nome_role&#39;</span> <span class="kw">TO</span> <span class="st">&#39;usuario&#39;</span>@<span class="st">&#39;localhost&#39;</span>;</span></code></pre></div></li>
+<li><p>Exemplo: concedendo os privilégios devidos aos usuários
+criados</p>
+<div class="sourceCode" id="cb28" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="super"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="st">&#39;app_developer&#39;</span> <span class="kw">TO</span> <span class="st">&#39;usuario_desenvolvedor&#39;</span>@<span class="st">&#39;localhost&#39;</span>;</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="st">&#39;app_read&#39;</span> <span class="kw">TO</span> <span class="st">&#39;usuario_leitura&#39;</span>@<span class="st">&#39;localhost&#39;</span>;</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="st">&#39;app_write&#39;</span> <span class="kw">TO</span> <span class="st">&#39;usuario_escrita&#39;</span>@<span class="st">&#39;localhost&#39;</span>;     </span></code></pre></div></li>
+</ul>
+<h2 id="encripitação-de-dados">Encripitação de dados</h2>
+<blockquote>
+<p>A encriptação envolve a conversão de um texto simples e legível para
+humanos em um texto incompreensível, que é conhecido como texto cifrado.
+Essencialmente, isso significa pegar dados legíveis e alterá-los para
+que pareçam aleatórios.</p>
+</blockquote>
+<h3 id="criptografia-simétrica">Criptografia simétrica</h3>
+<ul>
+<li>Também conhecida como criptografia de chave privada.</li>
+<li>Usa uma única chave para criptografar dados. A chave é um valor
+textual, como uma senha, que codifica e descodifica uma informação.</li>
+<li>Na criptografia simétrica tanto a encriptação como desencriptação
+ocorrem através da mesma chave</li>
+<li>Apesar de considerada menos segura a criptografia de chave privada
+utiliza pouco poder computacional</li>
+<li>O tamanho da chave pode ser de 128 bits a 256 bits</li>
+<li>O algoritimo mais utilizado é o AE5</li>
+</ul>
+<h3 id="criptogrfia-assimétrica">Criptogrfia assimétrica</h3>
+<ul>
+<li>Também conhecida como par chave privada-publica.</li>
+<li>Usa uma chave para encriptação e outra para desencriptação.</li>
+<li>Apesar de mais lenta é mais segura, já que são necessárias duas
+chaves.</li>
+<li>Possui a partir de 2048 bits</li>
+<li>O algoritimo mais usado é o RSA</li>
+</ul>
+<h3 id="funções-de-hash">Funções de Hash</h3>
+<ul>
+<li>Funções de hash são unidimensionais e irreversiveis, ou seja, não é
+possível recuperar a mensagem original sem uma chave
+desencriptadora.</li>
+<li>O Hashing é uma maneira de transformar um texto em outro teste.</li>
+<li>A unica maneira de quebrar um hash é brute force</li>
+<li>Util para manter informações sensiveis em bancos de dados.</li>
+<li>Algoritimos de hash:
+<ul>
+<li>MD5</li>
+<li>SHA-1</li>
+<li>SHA-2</li>
+</ul></li>
+</ul>
+<h2 id="criptografia-no-mysql">Criptografia no MYSQL</h2>
+<ul>
+<li>O MYSQL conta com algumas funções internas de segurança que incluem
+algoritimos de criptografia. Veja a tabela <a
+href="20230712211645-mysql_tabela_de_funcoes_de_criptografia.html">Mysql:
+Tabela de funções de criptografia</a></li>
+<li>As funções mais utilizadas em Mysql são:
+<ul>
+<li>Hash:
+<ul>
+<li>MD5, SHA-1 e SHA2</li>
+</ul></li>
+<li>Criptografia simérica:
+<ul>
+<li>AES</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="preparando-o-ambiente-1">Preparando o ambiente:</h3>
+<ul>
+<li><p>Criando uma database para exemplos e suas tabelas</p>
+<div class="sourceCode" id="cb29" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="exemplos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> exemplos;</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> cadastro_usuario (</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>     <span class="kw">id</span> <span class="dt">INT</span> <span class="kw">PRIMARY</span> <span class="kw">KEY</span> AUTO_INCREMENT,</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>     usuario <span class="dt">VARCHAR</span>(<span class="dv">30</span>),</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>     senha TEXT</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>   );</span></code></pre></div></li>
+</ul>
+<h3 id="utilizando-md5">Utilizando MD5</h3>
+<ul>
+<li><p>O MD5 criará um texto criptografado de 128 bits (32 caracteres)
+independentemente do valor original.</p></li>
+<li><p>Sintaxe básica:</p>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>MD5(<span class="st">&#39;algum texto&#39;</span>)</span></code></pre></div></li>
+<li><p>Exemplificando:</p>
+<ol>
+<li><p>Criando um usuário sem criptografia</p>
+<div class="sourceCode" id="cb31" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="exemplos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> cadastro_usuario (usuario, senha) <span class="kw">VALUES</span> (<span class="st">&#39;Sem criptografia&#39;</span>, <span class="st">&#39;Uma senha qualquer&#39;</span>)</span></code></pre></div></li>
+<li><p>Criando um usuário com criptografia</p>
+<div class="sourceCode" id="cb32" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="exemplos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> cadastro_usuario (usuario, senha) <span class="kw">VALUES</span> (<span class="st">&#39;Com criptografia MD5&#39;</span>, MD5(<span class="st">&#39;Uma senha qualquer&#39;</span>));</span></code></pre></div></li>
+<li><p>Verificando:</p>
+<div class="sourceCode" id="cb33" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="exemplos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> cadastro_usuario;</span></code></pre></div></li>
+</ol>
+<ul>
+<li>O MD5 faz criptografia de <code>STRINGS</code> portanto é imporante
+certificar de que os dados inseridos na função MD5() são do tipo
+correto</li>
+<li>MD5 sempre retorna o mesmo hash para o mesmo texto, mas um
+completamente difirente para textos meramente diferentes;
+<ul>
+<li><p>Exemplificando:</p>
+<div class="sourceCode" id="cb34" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="exemplos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> cadastro_usuario (usuario, senha) <span class="kw">VALUES</span> (<span class="st">&#39;MD5 mesma senha 1&#39;</span>, MD5(<span class="st">&#39;Mesma senha&#39;</span>));</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> cadastro_usuario (usuario, senha) <span class="kw">VALUES</span> (<span class="st">&#39;MD5 mesma senha 2&#39;</span>, MD5(<span class="st">&#39;Mesma senha&#39;</span>));</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> cadastro_usuario (usuario, senha) <span class="kw">VALUES</span> (<span class="st">&#39;MD5 meramente diferente&#39;</span>, MD5(<span class="st">&#39;Mesma senho&#39;</span>));</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> cadastro_usuario <span class="kw">WHERE</span> <span class="kw">id</span> <span class="kw">IN</span> (<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span></code></pre></div></li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="utilizando-o-sha-1">Utilizando o SHA-1</h3>
+<ul>
+<li><p>O SHA-1 produz um texto criptografado de 160 bit (40 caracteres).
+Pode ser considerado mais seguro que o <span class="spurious-link"
+target="Utilizando MD5"><em>MD5</em></span></p></li>
+<li><p>Sintaxe basica:</p>
+<div class="sourceCode" id="cb35"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>SHA(<span class="st">&#39;texto&#39;</span>);</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- OU</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>SHA1(<span class="st">&#39;outro texto&#39;</span>)</span></code></pre></div></li>
+<li><p>Exemplificando</p>
+<div class="sourceCode" id="cb36" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="exemplos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> cadastro_usuario (usuario, senha) <span class="kw">VALUES</span> (<span class="st">&#39;Criptografado SHA&#39;</span>, SHA(<span class="st">&#39;Uma senha&#39;</span>));</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> cadastro_usuario (usuario, senha) <span class="kw">VALUES</span> (<span class="st">&#39;Criptografado SHA1&#39;</span>, SHA1(<span class="st">&#39;Uma senha&#39;</span>));</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> cadastro_usuario      </span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>usuario</th>
+<th>senha</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Sem criptografia</td>
+<td>Uma senha qualquer</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Com criptografia MD5</td>
+<td>5c4bf8ca005244685ae1f5bab3e45f33</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>MD5 mesma senha 1</td>
+<td>9db385a61610648690df8670d76bb958</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>MD5 mesma senha 2</td>
+<td>9db385a61610648690df8670d76bb958</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>MD5 meramente diferente</td>
+<td>83f34d3a91da2ddff968e0c56ae21338</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Criptografado SHA</td>
+<td>48d346ddeba88e6b2e728c6e1e5e01baf8283cf3</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Criptografado SHA1</td>
+<td>48d346ddeba88e6b2e728c6e1e5e01baf8283cf3</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<h3 id="utilizando-sha-2">Utilizando SHA-2</h3>
+<ul>
+<li><p>O SHA2 difere um pouco dos anteriores já que o algoritimo precisa
+que seja indicado o numero de bits que deve possuir o hash.</p></li>
+<li><p>O numero de bits deve ser uma dessas opções</p>
+<ul>
+<li>224 <em>bits</em> : 28 caracteres</li>
+<li>256 <em>bits</em> : 32 caracteres</li>
+<li>384 <em>bits</em> : 48 caracteres</li>
+<li>512 <em>bits</em> : 64 caracteres</li>
+</ul></li>
+<li><p>Sintaxe básica</p>
+<div class="sourceCode" id="cb37"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>SHA2(<span class="st">&#39;texto&#39;</span>, bits)</span></code></pre></div></li>
+<li><p>Exemplificando:</p>
+<div class="sourceCode" id="cb38" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="exemplos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> cadastro_usuario (usuario, senha) <span class="kw">VALUES</span> (<span class="st">&#39;SHA2 com 224 bits&#39;</span>, SHA2(<span class="st">&#39;Alguma senha&#39;</span>, <span class="dv">224</span>))</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> cadastro_usuario (usuario, senha) <span class="kw">VALUES</span> (<span class="st">&#39;SHA2 com 384 bits&#39;</span>, SHA2(<span class="st">&#39;Alguma senha&#39;</span>, <span class="dv">384</span>));</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> cadastro_usuario</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>usuario</th>
+<th>senha</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Sem criptografia</td>
+<td>Uma senha qualquer</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Com criptografia MD5</td>
+<td>5c4bf8ca005244685ae1f5bab3e45f33</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>MD5 mesma senha 1</td>
+<td>9db385a61610648690df8670d76bb958</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>MD5 mesma senha 2</td>
+<td>9db385a61610648690df8670d76bb958</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>MD5 meramente diferente</td>
+<td>83f34d3a91da2ddff968e0c56ae21338</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Criptografado SHA</td>
+<td>48d346ddeba88e6b2e728c6e1e5e01baf8283cf3</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Criptografado SHA1</td>
+<td>48d346ddeba88e6b2e728c6e1e5e01baf8283cf3</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>SHA2 com 224 bits</td>
+<td>6f7528ac12356da12faa8f4a480250dc700f4a4e457f9a33025cb4ee</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>SHA2 com 384 bits</td>
+<td>1342ae3f2bbf21d1a67834709f5ab491f272c54d4ff2806cb46e9645acf733065c80bf471959b6c82ac91daee089a837</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>Mais segura entre as 3 funções de hash, porém também a mais
+pesada</p></li>
+</ul>
+<h3 id="utilizando-aes">Utilizando AES</h3>
+<ul>
+<li><p>O AES pode ser utilizado para criptografia com uma chave privada.
+No entanto ele não transforma o texto passado para string e sim para
+binário</p></li>
+<li><p>Sitaxe básica da função
+<strong>AES<sub>ENCRYPT</sub>()</strong></p>
+<div class="sourceCode" id="cb39"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>AES_ENCRYPT(<span class="st">&#39;texto&#39;</span>, <span class="st">&#39;chave&#39;</span>)</span></code></pre></div></li>
+<li><p>Exemplificando</p>
+<ol>
+<li><p>Adicionando um campo VARBINARY a tabela
+cadastro<sub>usuario</sub></p>
+<div class="sourceCode" id="cb40" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="exemplos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> cadastro_usuario <span class="kw">ADD</span> <span class="kw">COLUMN</span> senha_aes VARBINARY(<span class="dv">100</span>);     </span></code></pre></div></li>
+<li><p>Utilizando a função</p>
+<div class="sourceCode" id="cb41" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="exemplos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> cadastro_usuario (usuario, senha_aes) <span class="kw">VALUES</span> (<span class="st">&#39;Criptografado com AES&#39;</span>, AES_ENCRYPT(<span class="st">&#39;Senha secreta&#39;</span>, <span class="st">&#39;Chave super secreta&#39;</span>))       </span></code></pre></div></li>
+<li><p>Verificando</p>
+<div class="sourceCode" id="cb42" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="exemplos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> cadastro_usuario        </span></code></pre></div></li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>usuario</th>
+<th>senha</th>
+<th>senha<sub>aes</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Sem criptografia</td>
+<td>Uma senha qualquer</td>
+<td>NULL</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Com criptografia MD5</td>
+<td>5c4bf8ca005244685ae1f5bab3e45f33</td>
+<td>NULL</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>MD5 mesma senha 1</td>
+<td>9db385a61610648690df8670d76bb958</td>
+<td>NULL</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>MD5 mesma senha 2</td>
+<td>9db385a61610648690df8670d76bb958</td>
+<td>NULL</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>MD5 meramente diferente</td>
+<td>83f34d3a91da2ddff968e0c56ae21338</td>
+<td>NULL</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Criptografado SHA</td>
+<td>48d346ddeba88e6b2e728c6e1e5e01baf8283cf3</td>
+<td>NULL</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Criptografado SHA1</td>
+<td>48d346ddeba88e6b2e728c6e1e5e01baf8283cf3</td>
+<td>NULL</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>SHA2 com 224 bits</td>
+<td>6f7528ac12356da12faa8f4a480250dc700f4a4e457f9a33025cb4ee</td>
+<td>NULL</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>SHA2 com 384 bits</td>
+<td>1342ae3f2bbf21d1a67834709f5ab491f272c54d4ff2806cb46e9645acf733065c80bf471959b6c82ac91daee089a837</td>
+<td>NULL</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>Criptografado com AES</td>
+<td>NULL</td>
+<td>\252:\344\360\2322\243R\270R\257&amp;J\214</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Diferentes das hashs MD5, SHA-1 e SHA-2, a criptografia AES gera
+valores binários com caracteres que não se limitam ao alfanumérico. Por
+essa razão, essa criptografia é considerada mais segura que o uso de
+hashs.</p>
+</blockquote></li>
+</ul>
+<ol>
+<li><p>Utilizando o AES<sub>DECRYPT</sub>()</p>
+<ul>
+<li>Para desencriptar AES utilziamos a função
+AES<sub>DECRYPT</sub>()</li>
+<li>A sintaxe básica segue a formula</li>
+</ul>
+<div class="sourceCode" id="cb43"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>AES_DECRYPT(coluna_criptografada, <span class="st">&#39;chave&#39;</span>) </span></code></pre></div>
+<ul>
+<li>Se executarmos a função diretamente no entanto temos um resultado
+estranho:</li>
+</ul>
+<div class="sourceCode" id="cb44" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="exemplos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> AES_DECRYPT(senha_aes, <span class="st">&#39;Chave super secreta&#39;</span>) <span class="kw">FROM</span> cadastro_usuario <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">10</span></span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>AES<sub>DECRYPT</sub>(senha<sub>aes</sub>, 'Chave super
+secreta')</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>BLOB</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Isso ocorre pois o resultado continua no tipo VARBINARY e portanto
+deve ser convertido utilizando a função <strong>CAST()</strong>
+<ul>
+<li><p>A função CAST segue a seguinte sintaxe básica:</p>
+<div class="sourceCode" id="cb45"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">CAST</span>(Valor_de_um_tipo <span class="kw">AS</span> TIPO())</span></code></pre></div>
+<ul>
+<li><p>Exemplo simples:</p>
+<div class="sourceCode" id="cb46" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">CAST</span>(<span class="dv">1</span> <span class="kw">AS</span> <span class="dt">DECIMAL</span>(<span class="dv">3</span>,<span class="dv">2</span>))   </span></code></pre></div></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>CAST(1 AS DECIMAL(3,2))</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1.00</td>
+</tr>
+</tbody>
+</table></li>
+</ul></li>
+<li>Dessa forma podemos utilizar o CAST para converter o tipo VARBYNARY
+em CHAR</li>
+</ul>
+<div class="sourceCode" id="cb47" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="exemplos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">CAST</span>(AES_DECRYPT(senha_aes, <span class="st">&#39;Chave super secreta&#39;</span>) <span class="kw">AS</span> <span class="dt">CHAR</span>(<span class="dv">200</span>)) <span class="kw">FROM</span> cadastro_usuario <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">10</span></span></code></pre></div></li>
+</ol>
 </body>
 </html>
