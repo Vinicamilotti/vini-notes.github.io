@@ -1059,7 +1059,177 @@ em CHAR</li>
 <div class="sourceCode" id="cb47" data-engine="mysql"
 data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
 data-dbpassword="macro187" data-database="exemplos"><pre
-class="sourceCode sql"><code class="sourceCode sql"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">CAST</span>(AES_DECRYPT(senha_aes, <span class="st">&#39;Chave super secreta&#39;</span>) <span class="kw">AS</span> <span class="dt">CHAR</span>(<span class="dv">200</span>)) <span class="kw">FROM</span> cadastro_usuario <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">10</span></span></code></pre></div></li>
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">CAST</span>(AES_DECRYPT(senha_aes, <span class="st">&#39;Chave super secreta&#39;</span>) <span class="kw">AS</span> <span class="dt">CHAR</span>(<span class="dv">200</span>)) <span class="kw">FROM</span> cadastro_usuario <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">10</span></span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>CAST(AES<sub>DECRYPT</sub>(senha<sub>aes</sub>, 'Chave super
+secreta') AS CHAR(200))</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Senha secreta</td>
+</tr>
+</tbody>
+</table></li>
 </ol>
+<h3 id="criptografia-de-sistema-e-banco-de-dados">Criptografia de
+sistema e banco de dados</h3>
+<blockquote>
+<p>Apesar de o MySQL dispor de funções para encriptar os dados
+armazenados, essa encriptação também pode ser feita por meio do sistema
+que estiver utilizando o MySQL. Assim, os dados que estiverem sendo
+enviados para o banco de dados não correm o risco de serem interceptados
+e, consequentemente, lidos por outra pessoa. Mas isso não impede que os
+dados criptografados pelo sistema sejam criptografados novamente pelo
+banco de dados como uma camada extra de segurança.</p>
+</blockquote>
+<h2 id="sql-injection">SQL Injection</h2>
+<ul>
+<li>SQL Injection é um tipo de ataque que aproveita da falha de sistemas
+que interagem com bancos de dados SQL.</li>
+<li>É definido pela inserção indevida de instruções SQL a um banco.</li>
+<li>Há uma grande variedade de ataques de SQL injection. Veja a seguir
+algumas estratégias desse tipo de ataque</li>
+</ul>
+<h3 id="subvertendo-a-lógica-de-um-sistema">Subvertendo a lógica de um
+sistema</h3>
+<ul>
+<li><p>Uma página na web tem um formulário de login e senha que ao
+enviada executa o seguinte código no banco:</p>
+<div class="sourceCode" id="cb48"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> Usuario <span class="kw">WHERE</span> username <span class="op">=</span> <span class="st">&#39;usuario&#39;</span> <span class="kw">AND</span> senha <span class="op">=</span> <span class="st">&#39;senha&#39;</span></span></code></pre></div></li>
+<li><p>Esse código apenas retorna algum valor, se e somente se, um a
+linha da coluna 'username' possua o um determinado valor e ao mesmo
+tempo, na mesma linha, coluna senha, possua o mesmo valor</p></li>
+<li><p>No entanto o atacante inseriu o valor de usuário como 'root –' e
+nada no campo da senha</p></li>
+<li><p>Sendo assim o código que será executado é</p>
+<div class="sourceCode" id="cb49"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> Usuario <span class="kw">WHERE</span> username <span class="op">=</span> root <span class="co">-- AND senha = &#39;&#39;    </span></span></code></pre></div></li>
+<li><p>Perceba que os traços incluidos pelo atacante no preenchimento do
+formulário comentaram a segunda condição do código e portanto o dados do
+usuário 'root' serão retornados sem a necessidade de informar a
+senha.</p></li>
+</ul>
+<h3 id="tornando-todas-as-consultas-verdadeiras">Tornando todas as
+consultas verdadeiras</h3>
+<ul>
+<li><p>Ainda considerando o exemplo anterior.</p>
+<blockquote>
+<p>O objetivo original era criar uma instrução SQL para selecionar um
+usuário com um determinado nome e comentar qualquer outra verificação.
+Mas, nesse caso, o atacante ainda precisaria ter conhecimento do nome do
+usuário para ser bem-sucedido.</p>
+</blockquote></li>
+<li><p>Outra forma de explorar o SQL injection nesse cenário é adicionar
+uma condição a consulta que a torne sempre verdadeira</p></li>
+<li><p>Sendo assim, dessa vez o atacante digita no campo de nome de
+usuário o texto OR 1=1–</p></li>
+<li><p>Assim a query sql se torna:</p>
+<div class="sourceCode" id="cb50"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> Usuarios <span class="kw">WHERE</span> username <span class="op">=</span> <span class="ot">&quot;&quot;</span> <span class="kw">OR</span> <span class="dv">1</span><span class="op">=</span><span class="dv">1</span> <span class="co">-- AND senha = &quot;&quot;</span></span></code></pre></div></li>
+</ul>
+<ul>
+<li>Note que é possivel passar um valor vazio e o sql buscara nesse caso
+a primeira linha da tabela, fazendo o login através deste usuário</li>
+<li>Como a condição de 1=1 foi cumprida a query sempre executa</li>
+</ul>
+<h3 id="executando-instruções-sql-em-lote">Executando instruções SQL em
+lote</h3>
+<ul>
+<li><p>Um lote de instruções nada mais é que um grupo de instruções
+concatenadas. Uma pessoa mal intencionada pode utilizar essa feature
+para concatenar instruções indesejadas na query original</p></li>
+<li><p>Considerando o exmplo a cima, o atacante agora coloca como nome
+de usuário o valor ';Jhon DROP TABLE usuarios–'</p></li>
+<li><p>A query executada será</p>
+<div class="sourceCode" id="cb51"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> Usuarios <span class="kw">WHERE</span> username <span class="op">=</span> <span class="ot">&quot;Jhon&quot;</span>; <span class="kw">DROP</span> <span class="kw">TABLE</span> usuarios <span class="co">-- AND senha = &quot;&quot;</span></span></code></pre></div></li>
+</ul>
+<h2 id="integridade-de-dados">Integridade de dados</h2>
+<blockquote>
+<p>A integridade de dados é um componente fundamental da segurança da
+informação. O seu princípio é garantir a precisão e consistência dos
+dados armazenados e está diretamente ligado ao banco de dados, pois é no
+banco de dados que os dados estão guardados. Para isso, é definida uma
+série de procedimentos, regras e princípios de validação e verificação
+de erros baseada em regras de negócios predefinidas.</p>
+</blockquote>
+<ul>
+<li>A integridade de dados é imposta a um banco quando ele é projetado e
+autenticado por meio do uso continuo de rotinas de verificação e
+validação de erros</li>
+<li>Na pratica significa que durante a manipulação e leiteura do banco
+de dados devem estar seguros de corrupção, modificação ou divulgação não
+autorizada.</li>
+<li>Situações de ruptura na integridade podem acontecer aceidentalmente:
+<ul>
+<li>Erros de programação</li>
+</ul></li>
+</ul>
+<h3 id="dados-ruins">Dados ruins:</h3>
+<ul>
+<li>Dados ruins também ferem a integridade</li>
+<li>São dados ruins:
+<ul>
+<li>Dados duplicados</li>
+<li>Dados perdidos</li>
+<li>Dados imprecisos</li>
+<li>Dados incorretos</li>
+</ul></li>
+</ul>
+<h3 id="mantendo-a-integridade-de-dados">Mantendo a integridade de
+dados</h3>
+<ul>
+<li>Manter a integridade é uma tarefa que depende tanto dos
+administradores de bancos e dados como dos desenvolvedores que o
+consomem.
+<ul>
+<li>Exemplo:
+<ul>
+<li>Um desenvolvedor pode definir restrições para cadastros de novos
+dados ou para a recuperação de dados existentes</li>
+<li>Administradores por sua vez devem adotar práticas para garantir a
+integridade de dados, tais como:
+<ol>
+<li>Controle de acesso - <span class="spurious-link"
+target="Usuários e permissão de acesso"><em>Ver
+permissões</em></span></li>
+<li>Validação de entrada de dados</li>
+<li>Validação de saída de dados</li>
+<li>Procedimentos de <a
+href="20230708110529-senac_recuperacao_de_dados_backup_e_restore.html">Backup</a></li>
+<li>Uso de <a
+href="20230708110753-senac_desempenho_do_banco_de_dados_monitoramento_e_gerenciamento.html">logs</a>
+para monitorar quando os dados são inseridos, alterados ou apagados</li>
+<li>Realização de auditorias internas sistemáticas para garantir
+autalidade dos dados</li>
+</ol></li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="fatores-que-podem-afetar-a-integridade-de-dados">Fatores que
+podem afetar a integridade de dados</h3>
+<ul>
+<li>Erros humanos:
+<ul>
+<li>Entrada manual de dados pode aumentar as chances de erros,
+duplicações ou excluisões indevidadas.</li>
+</ul></li>
+<li>Erros de transferência:
+<ul>
+<li>Um erro de transferência ocorre quando dados n sejam transferidos
+com exito de um lugar do banco para outro. Esses erros normalmente
+ocorrem quando um item existe em uma tabela destino mas está ausente na
+tabela de origem</li>
+</ul></li>
+<li>Bugs e virus
+<ul>
+<li>Integridade pode ser comprometida por ataques externos ou bugs
+internos do banco de dados</li>
+</ul></li>
+</ul>
 </body>
 </html>
