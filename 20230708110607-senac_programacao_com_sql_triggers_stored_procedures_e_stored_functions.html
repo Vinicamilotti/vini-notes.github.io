@@ -159,6 +159,70 @@
       vertical-align: middle;
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
@@ -169,14 +233,1471 @@
 <h1 class="title">Senac: Programação com SQL - triggers, stored,
 procedures e stored functions</h1>
 </header>
-<p><strong>Anterior:</strong> <strong>Proxima</strong>:
-<strong>Raiz:</strong></p>
+<p><strong>Anterior:</strong> <a
+href="20230708110447-senac_seguranca_do_banco_de_dados_usuarios_e_permissoes_de_acesso.html">Senac:
+Segurança do banco de dados - usuarios e permissões de acesso</a>
+<strong>Proxima</strong>: <a
+href="20230708110627-senac_transacoes_e_locks.html">Senac: Transações e
+locks</a> <strong>Raiz:</strong> <a
+href="20230615180723-auxilar_no_manejamento_de_banco_de_dados.html">Auxilar
+na administração de banco de dados</a></p>
 <h1 id="info">Info</h1>
 <ul>
-<li>Aula:</li>
-<li>Data:</li>
-<li>Recursos (Textos, links, etc):</li>
+<li>Aula: Semana 2 - Texto 1</li>
+<li>Data: [2023-07-17]</li>
+<li>Recursos (Textos, links, etc): <a
+href="https://senac.blackboard.com/bbcswebdav/pid-9803771-dt-content-rid-281584361_1/institution/Senac%20RS/_cursos_tecnicos/TDS/UC04/conteudos/05_programacao_com_sql/index.html?page=1">Texto</a></li>
 </ul>
-<h1 id="section"></h1>
+<h1
+id="programação-com-sql-triggers-stored-procedures-e-stored-functions">Programação
+com SQL: triggers, stored procedures e stored functions</h1>
+<ul>
+<li><p>É possível escrever regras lógicas em um banco de dados. Além das
+funcionalidades básicas de <a
+href="20230615174222-senac_manipulacao_de_dados.html">manipulação de
+dados</a> e <a
+href="20230615174154-senac_definicao_de_dados.html">definição de
+dados</a> também é possível criar instruções complexas para
+potencializar as capacidades de um banco de dados por meio de regras
+condicionais, laços de repetição, variaveis e outros conceitos de
+programação.</p></li>
+<li><p>Apesar de utilizarmos o MYSQL para o estudo, a programação em SQL
+se aplica para qualquer banco de dados relacional que possua suporte
+para scripting, como o PostgreSQL, Microsoft SQL Server, Oracle DB e
+outros.</p>
+<blockquote>
+<p>Também é importante salientar que existem pequenas diferenças na
+sintaxe da SQL (structured query language) quando comparada aos
+diferentes SGBDs. Isso quer dizer que as instruções podem não ser
+exatamente iguais, mudando algumas palavras ou a sua ordem. Entretanto,
+as instruções são semanticamente semelhantes</p>
+</blockquote></li>
+</ul>
+<h2 id="utilização">Utilização</h2>
+<ul>
+<li>Com o potencial de crição de instruções complexas pode-se criar
+códigos compilados com diferentes instruções que recebem parametros de
+entrada e saída.</li>
+<li>Esses comando criados podem ser armazenados e reutilizados, criando
+assim uma <strong>stored procedures</strong></li>
+<li>Também é possível criar funções que retornam um unico valor e podem
+ser utilizadas dentro de outras declarações SQL como (SELECT e INSERT),
+essas funções são chamadas de <strong>stored functions</strong></li>
+<li>Também podem ser criados gatilhos de reação a um determinado evento.
+Ou seja, uma função que executa toda vez que um determinado evento
+acontece. Essas funções são chamadas de <strong>trigger</strong></li>
+</ul>
+<h2 id="preparando-ambiente">Preparando ambiente</h2>
+<ul>
+<li><p>Criando uma nova database "senac<sub>terrenos</sub>", suas
+tabelas, e criando populações básicas</p>
+<div class="sourceCode" id="cb1" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> senac_terrenos;</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">USE</span> senac_terrenos;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> vendedores (</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">id</span> <span class="dt">INT</span>(<span class="dv">6</span>) UNSIGNED AUTO_INCREMENT <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>nome <span class="dt">VARCHAR</span>(<span class="dv">25</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> cidades (</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">id</span> <span class="dt">INT</span>(<span class="dv">6</span>) UNSIGNED AUTO_INCREMENT <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>nome <span class="dt">VARCHAR</span>(<span class="dv">25</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>UF <span class="dt">CHAR</span>(<span class="dv">2</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>custo_metro_quadrado <span class="dt">DECIMAL</span>(<span class="dv">6</span>,<span class="dv">2</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> terrenos(</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="kw">id</span> <span class="dt">INT</span>(<span class="dv">6</span>) UNSIGNED AUTO_INCREMENT <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>id_cidade <span class="dt">INT</span>(<span class="dv">6</span>) UNSIGNED,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>largura <span class="dt">DECIMAL</span>(<span class="dv">8</span>,<span class="dv">2</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>comprimento <span class="dt">DECIMAL</span>(<span class="dv">8</span>,<span class="dv">2</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>vendido BOOL <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">DEFAULT</span> <span class="kw">FALSE</span>,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="kw">FOREIGN</span> <span class="kw">KEY</span>(id_cidade) <span class="kw">REFERENCES</span> cidades(<span class="kw">id</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> vendas(</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="kw">id</span> <span class="dt">INT</span>(<span class="dv">6</span>) UNSIGNED AUTO_INCREMENT <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>id_terreno <span class="dt">INT</span>(<span class="dv">6</span>) UNSIGNED,</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>id_vendedor <span class="dt">INT</span>(<span class="dv">6</span>) UNSIGNED,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>vendido_em DATETIME <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>valor_total <span class="dt">DECIMAL</span>(<span class="dv">24</span>,<span class="dv">2</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="kw">FOREIGN</span> <span class="kw">KEY</span>(id_terreno) <span class="kw">REFERENCES</span> terrenos(<span class="kw">id</span>),</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="kw">FOREIGN</span> <span class="kw">KEY</span>(id_vendedor) <span class="kw">REFERENCES</span> vendedores(<span class="kw">id</span>)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> vendedores(nome) <span class="kw">VALUES</span> (<span class="ot">&quot;Fulano&quot;</span>);</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> vendedores(nome) <span class="kw">VALUES</span> (<span class="ot">&quot;Ciclano&quot;</span>);</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> vendedores(nome) <span class="kw">VALUES</span> (<span class="ot">&quot;Beltrano&quot;</span>);</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> cidades (nome, UF, custo_metro_quadrado)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (<span class="ot">&quot;Porto Alegre&quot;</span>, <span class="ot">&quot;RS&quot;</span>, <span class="fl">6416.49</span>);</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> terrenos (id_cidade, largura, comprimento, vendido)</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (<span class="dv">1</span>, <span class="dv">12</span>, <span class="dv">4</span>, <span class="kw">false</span>);</span></code></pre></div>
+<table>
+<tbody>
+</tbody>
+</table></li>
+</ul>
+<h2 id="programação-em-sql---sintaxe">Programação em SQL - Sintaxe</h2>
+<h3 id="blocos-de-código">Blocos de código</h3>
+<ul>
+<li><p>Os blocos de código são o lugar onde devem ser criados os
+programas em sql</p></li>
+<li><p>Quando utilizamos as funções básicas de manipulação de dados
+(SELEC, INSERT, etc..) estamos utilizando <strong>instruções
+simples</strong>, isso significa que há <strong>um unico comando com um
+unico objetivo</strong></p>
+<ul>
+<li>Mesmo em instruções concatenadas como SELECTs dentro de SELECTs ou
+Joins ainda havera apenas uma instrução que deve ser executada</li>
+</ul></li>
+<li><p>Na programação em SQL utilizam-se <strong>instruções
+compostas</strong>. Por isso é necessário definir blocos de código</p>
+<ul>
+<li>Blocos de código funcionam como <strong>escopo</strong></li>
+</ul></li>
+<li><p>Criando um bloco de código</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">PROCEDURE</span> nome_procedure(parametros\)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">BEGIN</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>      instrucoes</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>   <span class="cf">END</span></span></code></pre></div></li>
+<li><p>Exemplo:</p>
+<div class="sourceCode" id="cb3" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">PROCEDURE</span> minha_procedure()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span>  </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">DECLARE</span> id_porto_alegre <span class="dt">INT</span> UNSIGNED <span class="kw">DEFAULT</span> <span class="dv">12</span>;</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a> <span class="kw">SELECT</span> id_porto_alegre;</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span>;</span></code></pre></div>
+<table>
+<tbody>
+</tbody>
+</table></li>
+<li><p>No entanto, de primeira esse código não funcionára. Isso ocorre
+pois o Mysql entende como delimitador padrão o caractere ";". No caso
+esse delimitador está sendo utilizado de forma ambigua, tanto para
+encerarr uma linha como em "DECLARE…12;" como para encerrar o bloco de
+código. Para sobrescrever esse comportamento devemos utilizar a
+instrução DELIMITER que altera o delimitador padrão de um bloco de
+código.</p></li>
+</ul>
+<div class="sourceCode" id="cb4" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  DELIMITER <span class="op">//</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">PROCEDURE</span> minha_procedure()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span>  </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a> <span class="kw">DECLARE</span> id_porto_alegre <span class="dt">INT</span> UNSIGNED <span class="kw">DEFAULT</span> <span class="dv">12</span>;</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a> <span class="kw">SELECT</span> id_porto_alegre;</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span>;</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">//</span></span></code></pre></div>
+<table>
+<tbody>
+</tbody>
+</table>
+<ul>
+<li><p>Agora podemos destrinchar o código:</p>
+<ul>
+<li>DELIMITER: indica que o delimitador de escopo deve ser os proximos
+caracteres, no caso o "//"</li>
+<li>CREATE PROCEDURE: comando para criar um novo <strong>stored
+procedure</strong></li>
+<li>minha<sub>procedure</sub>(): nome do procedure, entre parenteses
+devem estar os parametros da função, como não há nenhum podemos deixar
+em branco</li>
+<li>BEGIN: começa o bloco de código</li>
+<li>DELCARE: declara uma variável</li>
+<li>SELECT: comando SELECT, no caso o SELECT está selecionando a
+variavel</li>
+</ul></li>
+<li><p>Testando:</p>
+<div class="sourceCode" id="cb5" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CALL</span> minha_procedure()</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id<sub>portoalegre</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>12</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<h2 id="variaveis-locais">Variaveis locais</h2>
+<ul>
+<li>Uma variavel local pode ser manipulada e acessada dentro de um bloco
+de código e não pode ser utilizada fora dele.</li>
+</ul>
+<h2 id="tipos-de-dados">Tipos de dados</h2>
+<ul>
+<li>São os tipos de dados mais comuns para se utlizar em programação em
+SQL
+<ul>
+<li>VARCHAR</li>
+<li>INT</li>
+<li>DECIMAL</li>
+<li>FLOAT</li>
+<li>DATETIME</li>
+</ul></li>
+</ul>
+<h3 id="varchar">VARCHAR</h3>
+<ul>
+<li>Varchar é um texto (string) com extensão máxima pré-definida</li>
+<li>É imporante se atentar aos charset de cada banco de dados, uma vez
+que ele define as opções de caracteres que podem ser armazenados em uma
+variavel de tipo VARCHAR.</li>
+</ul>
+<blockquote>
+<p>Existem tipos de dados específicos para grandes quantidades de
+caracteres (como, por exemplo, o conteúdo de uma publicação em um blog).
+Nesses casos, evite o uso do VARCHAR e procure por outras opções, como
+text.</p>
+</blockquote>
+<h3 id="int">INT</h3>
+<ul>
+<li>Armazena um numer inteiro, sem casas decimais</li>
+</ul>
+<h3 id="decimal">DECIMAL</h3>
+<ul>
+<li>Tipos numéricos com precisão decimal prédefinida e tamanho inteiro
+também definido</li>
+<li>DECIMAL(N, M) onde N é o tamanho máximo de digitos inteiros e M a
+precisão máxima de decimais</li>
+</ul>
+<h3 id="float">FLOAT</h3>
+<ul>
+<li>Tipo numérico com ponto flutuante. Pode armazenar numeros reais,
+porém com menos precisão já que a parte decimal flutua
+automaticamente</li>
+</ul>
+<h3 id="datetime">DATETIME</h3>
+<ul>
+<li>Tipo de informação de tempo seguindo o formato YYYY-mm-DD
+HH:MM:SS</li>
+</ul>
+<h2 id="declarando-variaveis-em-sql">Declarando variaveis em SQL</h2>
+<ul>
+<li><p>O comando para declarar variaveis dentro de um bloco de código
+SQL é o <strong>DECLARE</strong> e segue a seguinte sintaxe básica:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DECLARE</span> nome_variavel TIPO OPÇÕES;</span></code></pre></div></li>
+<li><p>Exemplo:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DECLARE</span> salario <span class="dt">DECIMAL</span>(<span class="dv">5</span>,<span class="dv">2</span>)</span></code></pre></div></li>
+<li><p>Utilizando opções</p>
+<ul>
+<li><p>DEFAULT</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DECLARE</span> salario <span class="dt">DECIMAL</span>(<span class="dv">5</span>,<span class="dv">2</span>) <span class="kw">DEFAULT</span> <span class="fl">150.99</span></span></code></pre></div>
+<ul>
+<li>A opção DEFAULT seta um valor padrão para variavel, é util para
+inicializar uma variavel ou para tornar sua declaração opcional</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="atribuindo-novos-valores-a-uma-variavel">Atribuindo novos
+valores a uma variavel</h3>
+<ul>
+<li><p>Para atribuir novos valores a uma variavel utilizamos o comando
+SET</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DECLARE</span> nome_variavel <span class="dt">VARCHAR</span>(<span class="dv">25</span>) <span class="kw">DEFAULT</span> <span class="ot">&quot;valor inicial&quot;</span>;</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> nome_variavel <span class="op">=</span> <span class="ot">&quot;novo valor&quot;</span>;</span></code></pre></div></li>
+<li><p>O comando SET também permite o trabalho com operações matematicas
+com valores literais ou utilizando outras variaveis</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DECLARE</span> idade <span class="dt">INT</span>;</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">DECLARE</span> ano_nascimento <span class="dt">INT</span>;</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">DECLARE</span> ano_atual <span class="dt">INT</span> <span class="kw">DEFAULT</span> <span class="dv">2023</span>;</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> ano_nascimento <span class="op">=</span> <span class="dv">1998</span>   </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> idade <span class="op">=</span> ano_atual <span class="op">-</span> ano_nascimento; </span></code></pre></div></li>
+<li><p>Outra forma atribuir valores a uma variavel é utilizando querys
+sql com o comando INTO</p>
+<div class="sourceCode" id="cb11" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>DELIMITER <span class="op">//</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">PROCEDURE</span> busca_nome_vendedor()</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">DECLARE</span> variavel_nome <span class="dt">VARCHAR</span>(<span class="dv">25</span>);</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> nome <span class="kw">INTO</span> variavel_nome <span class="kw">FROM</span> vendedores <span class="kw">WHERE</span> <span class="kw">id</span><span class="op">=</span><span class="dv">1</span>;</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> variavel_nome;</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span><span class="op">//</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>DELIMITER ; </span></code></pre></div>
+<ul>
+<li>Testando</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb12" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CALL</span> busca_nome_vendedor();    </span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>variavel<sub>nome</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Fulano</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Boas práticas</li>
+</ul>
+<blockquote>
+<p>Em instruções semelhantes ao exemplo anterior, não nomeie as suas
+variáveis com o mesmo nome das colunas. Quando você tiver uma coluna e
+uma variável com o mesmo nome em uma instrução, o MySQL enxergará apenas
+a variável e você não conseguirá acessar o valor da coluna.</p>
+</blockquote>
+<ul>
+<li>Também é possivel através do comando SET realizar querys SQL</li>
+</ul>
+<div class="sourceCode" id="cb13" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>DELIMITER <span class="op">//</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">PROCEDURE</span> busca_nome_vendedor_set()</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">DECLARE</span> variavel_nome <span class="dt">VARCHAR</span>(<span class="dv">25</span>);</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SET</span> variavel_nome <span class="op">:=</span> (<span class="kw">SELECT</span> nome <span class="kw">FROM</span> vendedores <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">1</span>);</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> variavel_nome;</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span><span class="op">//</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>DELIMITER ;</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="kw">CALL</span> busca_nome_vendedor_set();</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>variavel<sub>nome</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Fulano</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>É importante perceber que, até o momento, estão sendo atribuídos
+apenas valores singulares, ou seja, uma coluna por vez. Tanto no exemplo
+do comando INTO quanto no exemplo do comando SET, foi utilizada a coluna
+"nome" em uma consulta que retornou apenas um resultado (isso porque a
+consulta foi realizada com a condição WHERE relacionada a uma chave
+primária - logo, um valor único).</p>
+</blockquote>
+<h3 id="armazenando-multiplas-colunas---comando-into">Armazenando
+multiplas colunas - Comando INTO</h3>
+<ul>
+<li><p>É possivel armazenar o resultado de multiplas colunas em
+variaveis utilizando apenas uma query SQL através do comando INTO
+utilizando a seguinte sintaxe:</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DECLARE</span> var_um</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">DECLARE</span> var_dois</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> valor_um, valor_dois <span class="kw">INTO</span> var_um, var_dois <span class="kw">FROM</span> tabela <span class="kw">WHERE</span> filtro</span></code></pre></div></li>
+<li><p>Exemplo:</p>
+<div class="sourceCode" id="cb15" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>DELIMITER <span class="op">//</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">PROCEDURE</span> buscar_dados_vendedor ()</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>   <span class="kw">DECLARE</span> v_nome <span class="dt">VARCHAR</span>(<span class="dv">25</span>);</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>   <span class="kw">DECLARE</span> v_email <span class="dt">VARCHAR</span>(<span class="dv">255</span>);</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>   <span class="kw">SELECT</span> nome, email <span class="kw">INTO</span> v_nome, v_email </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>   <span class="kw">FROM</span> vendedores <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">1</span>;</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> v_nome, v_email;</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span><span class="op">//</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>DELIMITER ;</span></code></pre></div>
+<ul>
+<li><p>Testando:</p>
+<div class="sourceCode" id="cb16" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CALL</span> buscar_dados_vendedor()</span></code></pre></div></li>
+</ul></li>
+</ul>
+<h2 id="variaveis-de-usuários">Variaveis de usuários</h2>
+<ul>
+<li><span class="spurious-link" target="Variaveis locais"><em>Variaveis
+locais</em></span> existem apenas dentro de seus respectivos blocos de
+código, no entanto podem existir cenários em que determinadas variaveis
+precisam estar disponiveis em todo o escopo que um usuário pode
+enxergar. Para isso existem as variaveis de usuário</li>
+</ul>
+<blockquote>
+<p>Diferentemente das variáveis locais, as variáveis de usuário existem
+também fora de um bloco de código. Isso acontece porque variáveis de
+usuário existem dentro de uma sessão de usuário. Sendo assim, pode-se
+declarar uma variável de usuário em uma instrução e utilizá-la em outra,
+pois variáveis de usuário não precisam de um bloco de código e podem ser
+utilizadas em diferentes instruções, compartilhando valores entre elas.
+Além disso, as variáveis de usuário não têm uma tipagem forte, ou seja,
+elas não têm tipos de dados definidos na sua declaração. Isso acontece
+porque variáveis de usuário não são declaradas, são apenas
+inicializadas.</p>
+</blockquote>
+<ul>
+<li>O que o excerto acima significa?
+<ul>
+<li>Ao criar uma variavel de usuário é nescessário atribuir um valor
+para variavel, dessa forma o MySQL é capaz de inferir o tipo de dados a
+que ela pertence.</li>
+<li>Mesmo com essa caracteristica de inferencia as variavies de usuário
+tem um tipos limitados que pode assumir, tentar atribuir um valor fora
+desses tipos fará com que o MySQL converta a variável (ver CAST) em um
+tipo suportado. São os tipos aceitos:
+<ul>
+<li>INT</li>
+<li>DECIMAL</li>
+<li>VARCHAR</li>
+<li>FLOAT</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="declarando-variáveis-de-usuário">Declarando variáveis de
+usuário</h3>
+<ul>
+<li>Fora de um bloco de código utilize o comando SET seguido e um @, o
+nome da variavel, = e o valor de inicialização</li>
+</ul>
+<div class="sourceCode" id="cb17" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @ola <span class="op">=</span> <span class="ot">&quot;Olá mundo&quot;</span></span></code></pre></div>
+<table>
+<tbody>
+</tbody>
+</table>
+<ul>
+<li>Destrinchando
+<ul>
+<li>Utiliza-se o <strong>SET</strong> ao invés do
+<strong>DECLARE</strong> pois, como dito acima, a variavel de usuário
+não é declarada, ela precisa ser inicializada</li>
+<li>O @ indica para o MySQL que estamos inicializando uma variavel de
+usuário</li>
+<li>Como dissemos que a variavel @ola é igual a "Olá mundo" o MySQL
+infere que essa variavel é do tipo VARCHAR</li>
+</ul></li>
+<li>Agora podemos utilizar a variavel @ola em qualquer query ou bloco de
+código que utilizarmos</li>
+</ul>
+<div class="sourceCode" id="cb18" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @ola <span class="op">=</span> <span class="ot">&quot;Olá mundo&quot;</span>;</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> @ola;        </span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>@ola</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Olá mundo</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Ou ainda</li>
+</ul>
+<div class="sourceCode" id="cb19" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @var_nome  <span class="op">=</span> <span class="ot">&quot;Ronaldo&quot;</span>;</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @var_email <span class="op">=</span> <span class="ot">&quot;fenomeno@gmail.com&quot;</span>;</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> vendedores(nome, email) <span class="kw">VALUES</span> (@var_nome, @var_email);</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> vendedores;</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>nome</th>
+<th>email</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Fulano</td>
+<td>asd@gmail.com</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Ciclano</td>
+<td>xcv@gmail.com</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Beltrano</td>
+<td>fgh@gmail.com</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Ronaldo</td>
+<td>fenomeno@gmail.com</td>
+</tr>
+</tbody>
+</table>
+<h3 id="alterando-variavies-de-usuário">Alterando variavies de
+usuário</h3>
+<ul>
+<li><p>As variaveis de usuário são alteradas da mesma forma que <span
+class="spurious-link" target="Variavies locais"><em>Variavies
+locais</em></span>, ou seja, através do comando SET ou utilizando uma
+query SQL e fazendo o pipe através do comando INTO</p>
+<div class="sourceCode" id="cb20" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @ola <span class="op">=</span> <span class="ot">&quot;Ola mundo&quot;</span>;</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> @ola;</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @ola <span class="op">=</span> <span class="ot">&quot;Hello World&quot;</span>;</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> @ola;</span></code></pre></div>
+<p>| @ola |</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>Ola mundo</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Segundo Select:</li>
+</ul>
+<p>| @ola |</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>Hello World</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>Ou ainda</p></li>
+</ul>
+<div class="sourceCode" id="cb21" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @var_nome <span class="op">=</span> <span class="ot">&quot;Nao disponivel&quot;</span>;</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @var_email <span class="op">=</span> <span class="ot">&quot;Nao disponivel&quot;</span>;</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome,email <span class="kw">INTO</span> @var_nome,@var_email <span class="kw">FROM</span> vendedores <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">4</span>;</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> @var_nome, @var_email;</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>@var<sub>nome</sub></th>
+<th>@var<sub>email</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ronaldo</td>
+<td>fenomeno@gmail.com</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>Variáveis de usuário também podem ser inicializadas através de
+uma query SQL</p>
+<div class="sourceCode" id="cb22" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @var_nome <span class="op">:=</span> (<span class="kw">SELECT</span> nome <span class="kw">FROM</span> vendedores <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">4</span>);</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> @var_nome;</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>@var<sub>nome</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ronaldo</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<h2 id="condicionais">Condicionais</h2>
+<ul>
+<li>Existem duas formas de utilizar condicionais em SQL:
+<ul>
+<li>IF statements</li>
+<li>IF functions</li>
+</ul></li>
+</ul>
+<h3 id="if-statment">IF statment</h3>
+<ul>
+<li><p>Os IF statements tem a semântica clássica de um uma condicional
+em qualquer liguagem de programação e a sintaxe basica segue o
+seguinte</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="cf">IF</span> condição <span class="op">=</span> comparação <span class="cf">THEN</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>   comandos;</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span> <span class="cf">IF</span>;</span></code></pre></div>
+<ul>
+<li>Exemplo</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb24" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>DELIMITER <span class="op">//</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">PROCEDURE</span> condicional_if()</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">DECLARE</span> numero <span class="dt">INT</span> <span class="kw">DEFAULT</span> <span class="dv">1</span>;</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> numero <span class="op">=</span> <span class="dv">1</span> <span class="cf">THEN</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>       <span class="kw">SET</span> numero <span class="op">:=</span> <span class="dv">2</span>;</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span> <span class="cf">IF</span>;</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> numero;</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span><span class="op">//</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>DELIMITER ;</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="kw">CALL</span> condicional_if()       </span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>numero</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>No MySQL a sintaxe do ELSE (Senão) é um pouco diferente, ela é
+declarada DENTRO do IF statment e não fora/logo após, como na maioria
+das linguagens de programação</li>
+</ul>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="cf">IF</span> condição <span class="cf">THEN</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>   codigo caso verdadeiro;</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">ELSE</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>   codigo caso falso;</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span> <span class="cf">IF</span></span></code></pre></div>
+<ul>
+<li>Exemplo</li>
+</ul>
+<div class="sourceCode" id="cb26" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>DELIMITER <span class="op">//</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">PROCEDURE</span> condicional_if_else()</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">DECLARE</span> numero <span class="dt">INT</span> <span class="kw">DEFAULT</span> <span class="dv">2</span>;</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> numero <span class="op">=</span> <span class="dv">1</span> <span class="cf">THEN</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>       <span class="kw">SET</span> numero <span class="op">:=</span> <span class="dv">2</span>;</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>       <span class="cf">ELSE</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>       <span class="kw">SET</span> numero <span class="op">:=</span><span class="dv">3</span>;</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span> <span class="cf">IF</span>;</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> numero;</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span><span class="op">//</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>DELIMITER ;</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="kw">CALL</span> condicional_if_else()  </span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>numero</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li><p>Parenteses no texto: Utilizando parâmetros</p>
+<ul>
+<li><p>Para criar uma função que utiliza parâmetros em SQL é necessário
+indicar o nome do parâmetro e logo em seguida o tipo de dados a ser
+utilizado. Sintaxe basica:</p>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">PROCEDURE</span> procedure_com_paramentro(parametro TIPO)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CALL</span> procedure_com_parametro(valor do tipo indicado)       </span></code></pre></div></li>
+<li><p>Veja o exemplo na sessão a seguir</p></li>
+</ul></li>
+</ol>
+<h3 id="voltando-ao-if-statment">Voltando ao if statment</h3>
+<ul>
+<li><p>Um if statment funciona como um diagrama de verdade, onde se uma
+informação for verdadeira um procedimento é executado, retornando uma
+nova informação, caso a informação inicial for falsa outro procedimento
+é executado, retornando outra informação <img
+src="./static/senac_fluxograma_verdade.png" /></p></li>
+<li><p>Transformando o fluxograma em uma procedure SQL</p>
+<div class="sourceCode" id="cb28" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>DELIMITER <span class="op">//</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">PROCEDURE</span> buscar_terrenos(id_vendedor <span class="dt">INT</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">DECLARE</span> id_encontrado <span class="dt">INT</span>;</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="kw">id</span> <span class="kw">INTO</span> id_encontrado <span class="kw">FROM</span> vendedores <span class="kw">WHERE</span> <span class="kw">id</span><span class="op">=</span> id_vendedor;</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> id_encontrado <span class="kw">IS</span> <span class="kw">NULL</span> <span class="cf">THEN</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>   <span class="kw">SELECT</span> <span class="ot">&quot;Sem acesso&quot;</span> <span class="kw">AS</span> error;</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">ELSE</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>   <span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> terrenos;</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span> <span class="cf">IF</span>;</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span><span class="op">//</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>DELIMITER ;        </span></code></pre></div>
+<ul>
+<li>Destrinchando:
+<ul>
+<li>A procedure buscar<sub>terrenos</sub> recebe como parametro um
+numero inteiro</li>
+<li>É declarada uma variavel id<sub>encontrado</sub> sem nenhum valor
+atribuido, ou seja, o valor da variavel é NULL</li>
+<li>É feita uma query SQL na tabela vendedores, que seleciona o id de um
+vendedor que tenha como id o mesmo valor do parametro
+id<sub>vendedor</sub> e atribui o resultado a variavel
+id<sub>encontrado</sub>. Note que caso não seja encontrado um vendedor
+com o id passado para a função nada é retornado da query, mantendo o
+valor de id<sub>encontrado</sub> como NULL</li>
+<li>Um if statment verifica se o valor de id<sub>econtrado</sub> é NULL,
+caso seja, retorna a string "Sem acesso" com uma tabela de nome error,
+caso o valor de id<sub>econtrado</sub> não seja NULL retorna todos os
+terrenos disponíveis</li>
+</ul>
+<ul>
+<li>Testando
+<ul>
+<li><p>Verificando vendedores e seus ids</p>
+<div class="sourceCode" id="cb29" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">id</span>, nome <span class="kw">FROM</span> vendedores       </span></code></pre></div></li>
+<li><p>Passando para a função um ID existente (1-4)</p>
+<div class="sourceCode" id="cb30" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CALL</span> buscar_terrenos(<span class="dv">1</span>);      </span></code></pre></div>
+<ul>
+<li><p>Passando para a função um id inexistente ( Maior que 4, menor que
+1 )</p>
+<div class="sourceCode" id="cb31" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CALL</span> buscar_terrenos(<span class="dv">5</span>)</span></code></pre></div></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>error</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sem acesso</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<h3 id="utilizando-o-elseif">Utilizando o ElSEIF</h3>
+<ul>
+<li><p>O ELSEIF é utilizado quando é mais de um caminho de verdade para
+a operação. Sua sintaxe basica é a seguinte:</p>
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="cf">IF</span> condiçãoA <span class="cf">THEN</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>   codigo caso condiçãoA</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>ELSEIF condiçãoB <span class="cf">THEN</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>   codigo caso condiçãoB</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="cf">ELSE</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>   codigo caso falso</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span> <span class="cf">IF</span></span></code></pre></div>
+<ul>
+<li>O fluxograma de verdade pode ser representado mais ou menos
+assim</li>
+</ul></li>
+</ul>
+<p><img src="./static/senac_elseif_diagrama.png" /></p>
+<ul>
+<li>Transformando o diagrama em uma procedure</li>
+</ul>
+<div class="sourceCode" id="cb33" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>DELIMITER <span class="op">//</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">PROCEDURE</span> buscar_comissao(id_vendedor <span class="dt">INT</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">DECLARE</span> comissao <span class="dt">DECIMAL</span>(<span class="dv">2</span>,<span class="dv">1</span>) <span class="kw">DEFAULT</span> <span class="fl">1.0</span>;</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">DECLARE</span> nome_vendedor <span class="dt">VARCHAR</span>(<span class="dv">25</span>);</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> nome <span class="kw">INTO</span> nome_vendedor <span class="kw">FROM</span> vendedores <span class="kw">WHERE</span> <span class="kw">id</span><span class="op">=</span>id_vendedor;</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> nome_vendedor <span class="op">=</span> <span class="ot">&quot;Fulano&quot;</span> <span class="cf">THEN</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>       <span class="kw">SET</span> comissao <span class="op">:=</span> <span class="fl">1.3</span>;</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    ELSEIF nome_vendedor <span class="op">=</span> <span class="ot">&quot;Ciclano&quot;</span> <span class="cf">THEN</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>       <span class="kw">SET</span> comissao <span class="op">:=</span> <span class="fl">1.2</span>;</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    ELSEIF nome_vendedor <span class="op">=</span> <span class="ot">&quot;Ronaldo&quot;</span> <span class="cf">THEN</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>       <span class="kw">SET</span> comissao <span class="op">:=</span> <span class="fl">9.0</span>;</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">ELSE</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>       <span class="kw">SET</span> comissao <span class="op">:=</span> <span class="fl">1.1</span>;</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span> <span class="cf">IF</span>;</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> comissao;</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a> <span class="cf">END</span><span class="op">//</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a> DELIMITER ;</span></code></pre></div>
+<ul>
+<li>Testando:
+<ul>
+<li>Verificando a comissão do id = 4 (Ronaldo)</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb34" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CALL</span> buscar_comissao(<span class="dv">4</span>)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>comissao</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>9.0</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Verificando a comissao do id = 1 (Fulano)</li>
+</ul>
+<div class="sourceCode" id="cb35" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CALL</span> buscar_comissao(<span class="dv">1</span>)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>comissao</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1.3</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Verificando a comissão do id = 3 (Beltrano)</li>
+</ul>
+<div class="sourceCode" id="cb36" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CALL</span> buscar_comissao(<span class="dv">3</span>)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>comissao</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1.1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="if-functions">IF functions</h3>
+<ul>
+<li><p>As if functions utilizam a mesma lógica dos <span
+class="spurious-link" target="IF statment"><em>IF statments</em></span>
+no entando sua utilização é outra. If functions retornam um valor para
+uma outra ou atribuição. Veja a sintaxe basica:</p>
+<div class="sourceCode" id="cb37"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="cf">IF</span>(condiçao, valor_caso_verdadeiro, valor_caso_falso)</span></code></pre></div></li>
+<li><p>Exemplo</p>
+<div class="sourceCode" id="cb38" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="cf">IF</span>(<span class="dv">10</span><span class="op">&gt;</span><span class="dv">1</span>, <span class="ot">&quot;É maior&quot;</span>, <span class="ot">&quot;É menor&quot;</span>) <span class="kw">AS</span> Exemplo</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>Exemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>É maior</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>Exemplo prático</p></li>
+</ul>
+<div class="sourceCode" id="cb39" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">id</span>, <span class="cf">IF</span>(nome<span class="op">=</span><span class="ot">&quot;Ronaldo&quot;</span>, <span class="ot">&quot;É o ronaldo&quot;</span>, <span class="ot">&quot;Não é o Ronaldo&quot;</span>) <span class="kw">FROM</span> vendedores <span class="kw">AS</span> Ronaldo</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>id</th>
+<th>IF(nome="Ronaldo", "É o ronaldo", "Não é o Ronaldo")</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Não é o Ronaldo</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Não é o Ronaldo</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Não é o Ronaldo</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>É o ronaldo</td>
+</tr>
+</tbody>
+</table>
+<h2 id="laços-de-repetição">Laços de repetição</h2>
+<ul>
+<li>Os laços de repetição implementados pelo MySQL são:
+<ul>
+<li>WHILE</li>
+<li>LOOP</li>
+</ul></li>
+</ul>
+<h3 id="while">WHILE</h3>
+<ul>
+<li>A semântica é identica a um while em qualquer linguagem de
+programação. Já a sintaxe segue a seguinte formula</li>
+</ul>
+<div class="sourceCode" id="cb40"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DECLARE</span> contador <span class="dt">INT</span> <span class="kw">DEFAULT</span> x</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="cf">WHILE</span> condição_atrelada_ao_contador DO</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>   codigo</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>   atualização do contador</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span> <span class="cf">WHILE</span>;</span></code></pre></div>
+<ul>
+<li><p>Exemplificando: adicionando vários vendedores genéricos (nome
+atrelado ao contador) a a tabela "vendedores"</p>
+<div class="sourceCode" id="cb41" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>DELIMITER <span class="op">//</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">PROCEDURE</span> inserir_vendedores()</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">DECLARE</span> contador <span class="dt">INT</span> <span class="kw">DEFAULT</span> <span class="dv">5</span>;</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">WHILE</span> contador <span class="op">&lt;</span> <span class="dv">10</span> DO</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>       <span class="kw">INSERT</span> <span class="kw">INTO</span> vendedores (nome) <span class="kw">VALUES</span>(<span class="fu">CONCAT</span>(<span class="ot">&quot;Vendedor&quot;</span>, contador));</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>       <span class="kw">SET</span> contador <span class="op">=</span> contador <span class="op">+</span> <span class="dv">1</span>;</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span> <span class="cf">WHILE</span>;</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span><span class="op">//</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>    DELIMITER ;</span></code></pre></div></li>
+<li><p>Destrinchando</p>
+<ul>
+<li>Declara uma variavel "contador", ela é um numero inteiro e se
+inicializa com o valor padrão 5</li>
+<li>Inicia-se o WHILE. Enquanto o contador for menor do que 10 executa o
+escopo do WHILE</li>
+<li>Toda vez que o escopo do WHILE for executado duas coisas acontecem:
+<ol>
+<li>é inserido na tabela vendedores uma nova linha, essa linha contem
+apenas um nome, o nome é a palavra "Vendedor" concatenada com o número
+que a variavel "contador" armazena no momento da execução. Na primeira
+execução esse valor é 5</li>
+<li>Muda o valor da variavel contador para um novo valor, sendo que esse
+valor é o valor atual do contador + 1</li>
+</ol></li>
+</ul></li>
+<li><p>Testando:</p>
+<ul>
+<li><p>Executando a procedure</p>
+<div class="sourceCode" id="cb42" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CALL</span> inserir_vendedores()</span></code></pre></div></li>
+<li><p>Verificando:</p>
+<div class="sourceCode" id="cb43" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">id</span>, nome <span class="kw">FROM</span> vendedores</span></code></pre></div></li>
+</ul></li>
+</ul>
+<h3 id="loop-extra-texto">LOOP (extra texto)</h3>
+<ul>
+<li><p>Um LOOP é bem parecido com um WHILE mas possui duas
+diferenças</p>
+<ol>
+<li>O LOOP não tem uma condição de para explicita na declaração, essa
+condição deve ser manualmente inserida no escopo do LOOP</li>
+<li>O LOOP precisa ser rotulado</li>
+</ol></li>
+<li><p>Sintaxe básica</p>
+<div class="sourceCode" id="cb44"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>rotulo_do_loop : <span class="cf">LOOP</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    procedimento a ser  repetido</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> condição de parada atingida <span class="cf">THEN</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>       LEAVE rotulo_do_loop</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span> <span class="cf">IF</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span> <span class="cf">LOOP</span> rotulo_do_loop        </span></code></pre></div></li>
+<li><p>Útil para quando precisa-se executar um procedimento em uma
+tabela sem uma condição de parada previamente sabida.</p>
+<ul>
+<li>Exemplo: precisa-se somar os valores de venda de produtos até que a
+soma total seja maior ou igual a um numero definido</li>
+</ul></li>
+</ul>
+<h2 id="stored-procedures">Stored Procedures</h2>
+<ul>
+<li>Até agora foram criados alguns Stored Procedures como
+exemplificações.</li>
+<li>Entendendo melhor os stored procedures:
+<ul>
+<li>Um Stored procedure é uma função que fica armazenada no banco de
+dados para usos futuros</li>
+</ul></li>
+</ul>
+<h3 id="criando-um-stored-procedure">Criando um Stored Procedure</h3>
+<ul>
+<li><p>Sintaxe básica</p>
+<div class="sourceCode" id="cb45"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>DELIMITER <span class="op">//</span>        </span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">PROCEDURE</span> nome_do_procedure()</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    codigo</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span><span class="op">//</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>DELIMITER ;</span></code></pre></div></li>
+<li><p>Destrinchando:</p>
+<ul>
+<li>DELIMITER: define um novo delimitador de linha, para que o ";" entre
+os comandos internos não feche o bloco de código</li>
+<li>CREATE PROCEDURE: comando SQL para criar um Stored Procedure</li>
+<li>nome<sub>doprocedure</sub>: nome da procedure que se deseja
+armazenar no banco</li>
+<li>(): dentro dos parenteses vão os parametros da função
+<ul>
+<li>Deve ser declarado da seguinte forma: (nome<sub>parametro1</sub>
+TIPO, nome<sub>parametro2</sub> TIPO…)</li>
+</ul></li>
+<li>BEGIN/END: delimitação do bloco de código do procedure</li>
+</ul>
+<ul>
+<li>Stored procedures ficam armazenados em uma sessão do banco de dados
+e sempre podem ser chamados, dadas as devidas permissões</li>
+</ul></li>
+</ul>
+<ol>
+<li><p>Excluindo um procedure</p>
+<ul>
+<li><p>Tão simples quando</p>
+<div class="sourceCode" id="cb46"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">PROCEDURE</span> nome_do_procedure;</span></code></pre></div></li>
+</ul></li>
+</ol>
+<h3 id="utilizando-parametros">Utilizando parametros</h3>
+<blockquote>
+<p>Quando se cria um stored procedure, definem-se quais serão os
+parâmetros passados ao chamar a stored procedure, podendo ser zero ou
+mais parâmetros. Cada parâmetro terá um modo, um nome e um tipo de
+dado.</p>
+</blockquote>
+<ul>
+<li>Tipos de dados:
+<ul>
+<li>Os tipos de dados são os mesmos disponiveis para a criação de
+variaveis</li>
+</ul></li>
+<li>Nome dos parametros:
+<ul>
+<li>Devem utilizar apenas caracteres ASCII (letras maiúsculas e
+minúsculas sem acentuação, números inteiros e underline)</li>
+</ul></li>
+<li>Modo:
+<ul>
+<li>Define se um parametro é de <strong>entrada</strong>, de
+<strong>saida</strong> ou <strong>ambos</strong></li>
+</ul></li>
+</ul>
+<ol>
+<li><p>Parametros de entrada:</p>
+<ul>
+<li>Paremetros de entrada são representados pelo comando IN, é um valor
+que deve ser informado no call da função e será utilizado para realizar
+os procedimentos seguintes. Por padrão todos os parametros são de
+entrada, portanto não é nescessário especificar que um parametro é um
+parametro de entrada.
+<ul>
+<li>Criando uma função de soma entre dois numeros que devem ser
+informados como parametros de entrada</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb47" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>DELIMITER <span class="op">//</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">PROCEDURE</span> utilizando_parametro(numA <span class="dt">INT</span>, numB <span class="dt">INT</span>)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>     <span class="kw">SELECT</span> numA<span class="op">+</span>numB;</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span><span class="op">//</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>DELIMITER ;         </span></code></pre></div>
+<ul>
+<li>Chamando</li>
+</ul>
+<div class="sourceCode" id="cb48" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CALL</span> utilizando_parametro(<span class="dv">4</span>,<span class="dv">5</span>);</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CALL</span> utilizando_parametro(<span class="dv">2</span>,<span class="dv">3</span>);</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>numA+numB</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>9</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>numA+numB</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Perceba que a mesma função produziu resultados diferentes, pois
+foram passados numeros diferentes como parametros</li>
+</ul></li>
+<li><p>Parametros de saída</p>
+<ul>
+<li>Representados pelo comando OUT</li>
+<li>Tem como objetivo receber uma variavel, permitindo alterar o seu
+valor por meio da execução da função. É uma forma de retornar algo de
+dentro de uma Stored Procedure para fora, utilizando o seu valor fora do
+bloco de código</li>
+<li>O parametro de saida será o retorno da função</li>
+<li>Exemplo:
+<ul>
+<li>Criando uma procedure que busca o nome vendedor de id 1 e tem como
+parametro de saida a variavel vendedor</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb49" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>DELIMITER <span class="op">//</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">PROCEDURE</span> procedure_com_parametro_de_saida(id_vendedor <span class="dt">INT</span>, <span class="kw">OUT</span> vendedor <span class="dt">VARCHAR</span>(<span class="dv">25</span>))</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> nome <span class="kw">INTO</span> vendedor <span class="kw">FROM</span> vendedores <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> id_vendedor;</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span><span class="op">//</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>DELIMITER ;         </span></code></pre></div>
+<table>
+<tbody>
+</tbody>
+</table>
+<ul>
+<li>Se chamarmos essa procedure temos:</li>
+</ul>
+<div class="sourceCode" id="cb50" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CALL</span> procedure_com_parametro_de_saida(<span class="dv">1</span>, @nome_vendedor)</span></code></pre></div>
+<ul>
+<li>No entanto nada é retornado dessa procedure em si, pois o valor de
+saida foi guardado na variavel @nome<sub>vendedor</sub>, como pode-se
+verificar:</li>
+</ul>
+<div class="sourceCode" id="cb51" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CALL</span> procedure_com_parametro_de_saida(<span class="dv">1</span>, @nome_vendedor);</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> @nome_vendedor</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>@nome<sub>vendedor</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Fulano</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Sendo assim, ao executar essa procedure, criamos uma variavel a
+nivel de usuário com os valores retornados da procedure, que agora pode
+ser utilizada em outra função ou query</li>
+</ul></li>
+<li><p>Parametros de entrada e saida</p>
+<ul>
+<li>Representada pelo comando INOUT e tem o objetivo de atuar tanto como
+entrad acomo saida.</li>
+<li>Veja o exemplo a seguir:
+<ul>
+<li><p>Criando uma nova função de soma, mas agora com parametros
+INOUT</p>
+<div class="sourceCode" id="cb52" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>DELIMITER <span class="op">//</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">PROCEDURE</span> procedure_inout(INOUT numero <span class="dt">INT</span>)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SET</span> numero <span class="op">=</span> numero <span class="op">+</span><span class="dv">1</span>;</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span><span class="op">//</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>DELIMITER ;         </span></code></pre></div></li>
+<li><p>Utilizando:</p>
+<ul>
+<li>Como visto anteriormente, um parametro OUT será o retorno da função
+em uma variavel, ao mesmo tempo um parametro IN deve ter um valor
+definido para que a procedure possa trabalhar com ele. Sendo assim é
+necessário passar como parametro para uma função com parametro INOUT uma
+variavel inicializada que será então alterada pela função e
+retornada</li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb53" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @numero <span class="op">:=</span> <span class="dv">2</span>;</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CALL</span> procedure_inout(@numero);</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> @numero;</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>@numero</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>3</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<h3 id="executando-um-stored-procedure">Executando um stored
+procedure</h3>
+<ul>
+<li>Basicamente utilizando o comando CALL.</li>
+<li>Se o stored procedure precisa de parametros de entrada, basta
+passa-lo entre parenteses</li>
+<li>Se tiver parametros de saida o valor sera retornado em uma variavel
+de usuario, que deve ser indicada com um @ no momento do CALL</li>
+<li>Se tiver parametros INOUT uma variavel de usuário deve ser definida
+anteriormente, com valor coerente ao tipo de dados do parametro, essa
+variavel será então manipulada pelo procedure e assumirá um valor
+determinado por ele</li>
+</ul>
+<h3 id="retornando-valores-de-um-stored-procedure.">Retornando valores
+de um stored procedure.</h3>
+<ul>
+<li>Uma das formas é utilizando procedures com parametros OUT, como
+visto ateriormente</li>
+<li>Também é possível utilizar um SELECT INTO dentro da propria
+procedure, afim de criar uma variavel de usuário
+<ul>
+<li><p>Exemplo</p>
+<div class="sourceCode" id="cb54"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">PROCEDURE</span> exemplo()</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="dv">1</span> <span class="kw">INTO</span> @variavel_de_usuario;</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span></span></code></pre></div></li>
+</ul></li>
+</ul>
+<h2 id="stored-functions">Stored Functions</h2>
+<ul>
+<li><p>A estrutura de uma stored function é semelhante a uma stored
+procedure. Ambos armazenam instruções complexas</p></li>
+<li><p>A a diferença entre elas é a forma de retorno.</p></li>
+<li><p>Veja stored function a seguir</p>
+<div class="sourceCode" id="cb55" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>DELIMITER <span class="op">//</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">FUNCTION</span> buscar_preco (id_terreno <span class="dt">INT</span>) RETURNS <span class="dt">DECIMAL</span>(<span class="dv">24</span>,<span class="dv">2</span>) DETERMINISTIC</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>   <span class="kw">DECLARE</span> v_custo_m2 <span class="dt">DECIMAL</span>(<span class="dv">6</span>,<span class="dv">2</span>);</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>   <span class="kw">DECLARE</span> v_largura <span class="dt">INT</span>;</span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>   <span class="kw">DECLARE</span> v_comprimento <span class="dt">INT</span>;</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>   <span class="kw">SELECT</span> c.custo_metro_quadrado, t.largura, t.comprimento <span class="kw">INTO</span> v_custo_m2, v_largura, v_comprimento <span class="kw">FROM</span> terrenos t <span class="kw">LEFT</span> <span class="kw">JOIN</span> cidades c <span class="kw">ON</span> c.<span class="kw">id</span> <span class="op">=</span> t.id_cidade <span class="kw">WHERE</span> t.<span class="kw">id</span> <span class="op">=</span> id_terreno;</span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>   <span class="kw">RETURN</span> (v_comprimento <span class="op">*</span> v_largura) <span class="op">*</span> v_custo_m2;</span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a> <span class="cf">END</span><span class="op">//</span></span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a> DELIMITER ;</span></code></pre></div>
+<ul>
+<li>Assim como stored procedures, começa-se criando a função (CREATE
+FUNCTION), atribuindo um nome (buscar<sub>preco</sub>) e seus
+parametros</li>
+<li>Diferentemente dos procedures, nas functions não há modo de
+parametro, todos os parametros são de ENTRADA (IN)</li>
+<li>Agora a diferença a certa do retorno: Após a definição de parametros
+é necessário indicar qual tipo de dados a função retorna, assim como em
+Java, C, etc;
+<ul>
+<li>Dentro do escopo, portanto, devemos adicionar a keyword RETURN
+seguida dos valores que devem ser retornados pela função, esses valores
+devem respeitar o tipo de dados explicitado no retorno</li>
+</ul></li>
+<li>Após definir o tipo de retorno é necessário definir se o retorno é
+deterministico (DETERMINISC) ou não-deterministico (NOT DETERMINISTIC)
+<ul>
+<li>Uma função deterministica sempre retorna os mesmos valores dados os
+mesmos parametros</li>
+<li>A função não deterministica pode variar o resultado mesmo possuindo
+os mesmo valores de entrada</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="executando-uma-stored-function">Executando uma stored
+function</h3>
+<ul>
+<li><p>Ainda tratando da diferença de retorno: como uma stored function
+tem obrigatoriamente um retorno e um retorno de um tipo especifico ela
+pode substituir valores de maneira literal. Sendo assim para executar
+uma stored function utilizamos os comando SQL. Exemplos</p>
+<div class="sourceCode" id="cb56" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> buscar_preco(<span class="dv">1</span>);</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>buscar<sub>preco</sub>(1)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>307991.52</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Sendo assim, podemos utilizar a função em SELECTs, INSERTs, UPDATEs,
+DELETEs, etc…
+<ul>
+<li>Exemplo:
+<ul>
+<li><p>Suponha que o terreno de id 1 foi vendido, e para saber o preço
+do terreno, a fim de inclui-lo na tabela venda campo
+valor<sub>total</sub>, utilizare-mos a função buscar preço</p>
+<div class="sourceCode" id="cb57" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> vendas (id_terreno, id_vendedor, vendido_em, valor_total) <span class="kw">VALUES</span> (<span class="dv">1</span>, <span class="dv">1</span>, <span class="ot">&quot;2023-07-29 14:29:00&quot;</span>, buscar_preco(<span class="dv">1</span>)); </span></code></pre></div></li>
+<li><p>Agora suponha que precisamos buscar na tabela vendas a data de
+venda de terrenos com o valor maior ou igual a desse terreno</p>
+<div class="sourceCode" id="cb58" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> vendido_em <span class="kw">FROM</span> vendas <span class="kw">WHERE</span> valor_total <span class="op">&gt;=</span> buscar_preco(<span class="dv">1</span>) </span></code></pre></div></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>vendido<sub>em</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2023-07-29 14:29:00</td>
+</tr>
+</tbody>
+</table></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="stored-functions-x-stored-procedures-extra-texto">Stored
+functions X Stored Procedures (extra texto)</h2>
+<ul>
+<li>A diferença entre os dois esta no retorno. Portanto a diferença de
+uso é a utilidade do retorno de cada tipo de função</li>
+<li>Uma Stored Function é muito util se precisamos de um valor que não
+se encontra diretamente no banco de dados, ou quando possuimos uma
+consulta muito recorrente que é necessária para um relatório, ou seja,
+quando é imporante que um valor seja extraido da função</li>
+<li>Um Procedure, por sua vez, não precisa retornar nada e é util para
+realizarmos operações no banco de dados
+<ul>
+<li>Exemplo: Excluir todas as contas criadas em uma determinada data e
+que nunca mais foram utilizadas; mover todos ou apenas alguns os
+produtos de uma categoria para outra, etc…</li>
+</ul></li>
+</ul>
+<h2 id="triggers">Triggers</h2>
+<ul>
+<li>Enquanto Stored functions/procedures são um conjunto de instruções
+que devem ser executadas "manualmente", triggers são um conjunto de
+instruções que são executadas toda vez que um outro evento prédefinido
+acontece, isso é, os triggers são um conjunto de instruções
+<strong>reativas</strong>.
+<ul>
+<li>Exemplo de trigger: toda vez que algo é inserido em uma tabela
+especifica, os dados de outra tabela são atualizados.</li>
+</ul></li>
+</ul>
+<h3 id="criando-um-trigger">Criando um Trigger</h3>
+<ul>
+<li><p>Um trigger pode ser criado da seguinte maneira</p>
+<div class="sourceCode" id="cb59"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TRIGGER</span> nome_trigger CONDIÇÃO <span class="kw">ON</span> tabela Escopo</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="op">//</span> o que fazer</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span></span></code></pre></div></li>
+<li><p>Exemplo:</p>
+<div class="sourceCode" id="cb60" data-engine="mysql"
+data-dbhost="127.0.0.1" data-dbport="3306" data-dbuser="vini"
+data-dbpassword="macro187" data-database="senac_terrenos"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>DELIMITER <span class="op">//</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TRIGGER</span> marcar_venda <span class="kw">AFTER</span> <span class="kw">INSERT</span> <span class="kw">ON</span> vendas <span class="cf">FOR</span> <span class="kw">EACH</span> <span class="kw">ROW</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a> <span class="kw">UPDATE</span> terrenos <span class="kw">SET</span> vendido <span class="op">=</span> <span class="kw">true</span> <span class="kw">WHERE</span> <span class="kw">id</span><span class="op">=</span> <span class="kw">NEW</span>.id_terreno;</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span><span class="op">//</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>DELIMITER ;          </span></code></pre></div>
+<ul>
+<li>Destrinchando:
+<ul>
+<li>Cria-se o trigger marcar<sub>venda</sub></li>
+<li>Especifica que:
+<ul>
+<li>Após (AFTER) uma inserção na tabela "vendas"…</li>
+<li>Para cada linha que ativou o trigger…</li>
+<li>É executado o código…</li>
+<li>Atualiza os dados na tabela terrenos on o id é igual a…</li>
+<li>NEW: o NEW é uma variavel de sistema que carrega o valor que está
+sendo inserido ou atualizado, ou seja, ela existe tanto no evento de
+insert que ativa o trigger como na execução do update. No código em
+questão está se procurando o valor id<sub>terrenos</sub> em ambos os
+processos. A variavel NEW existe nos eventos INSERT e UPDATE e se
+referencia ao valor inserido ou ao valor atualizado
+<ul>
+<li>A variavel OLD (oposta ao new) carrega o valor que foi atualizado ou
+removido, dessa forma existe apenas em eventos UPDATE e DELETE</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
 </body>
 </html>

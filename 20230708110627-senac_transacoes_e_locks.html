@@ -172,10 +172,136 @@
 <strong>Raiz:</strong></p>
 <h1 id="info">Info</h1>
 <ul>
-<li>Aula:</li>
-<li>Data:</li>
-<li>Recursos (Textos, links, etc):</li>
+<li>Aula: Semana 2 - texto 2</li>
+<li>Data: [2023-07-29]</li>
+<li>Recursos (Textos, links, etc): <a
+href="https://senac.blackboard.com/bbcswebdav/pid-9803771-dt-content-rid-281584361_1/institution/Senac%20RS/_cursos_tecnicos/TDS/UC04/conteudos/06_transacoes_e_locks/index.html?page=1">Texto</a></li>
 </ul>
-<h1 id="section"></h1>
+<h1 id="transações-e-locks">Transações e locks</h1>
+<blockquote>
+<p>Dois dos conceitos mais importantes e presentes, mesmo
+implicitamente, em quase todas as operações aplicadas a banco de dados
+são os de bloqueios e de transações. Os bloqueios (ou locks) auxiliam na
+consistência de dados, garantindo que a inclusão de um registro em uma
+tabela, por exemplo, ocorra exatamente como especificado pela instrução
+SQL (structured query language) executada e impedindo que outras
+operações paralelas afetem negativamente o resultado desse comando.</p>
+</blockquote>
+<h2 id="conceitos">Conceitos</h2>
+<ul>
+<li><p>Um banco de dados é naturalmente desenvolvido para que multiplas
+operações simultâneas sejam realizadas.</p>
+<blockquote>
+<p>Imagine o quão inadequado seria um banco que permitisse apenas uma
+conexão por vez. Isso impossibilitaria a operação até de sistemas muito
+simples 2̆013 basta haver mais de um usuário ao mesmo tempo.</p>
+</blockquote></li>
+<li><p>No entanto, operações simultâneas trazem efeitos colaterais como
+o risco imediato de que uma query afete outra query sendo executada ao
+mesmo tempo.</p>
+<ul>
+<li>Um exemplo disso é por exemplo dois usuários do banco excluindo
+dados na mesma tabela. Se ambas as querys forem executadas ao mesmo
+tempo, sem nenhum tipo de controle, linhas erradas podem ser deletadas.
+Exemplo:
+<ul>
+<li>Usuário A exclui a linha de id = 4 suponha que essa seja a linha
+4</li>
+<li>Usuário B quer excluir a linha de id = 6, suponha quessa seja a
+linha 6</li>
+<li>O Banco encontra a linha 4 a exclui, transformando a linha 5 na nova
+linha 4 e a 6 na nova linha 5</li>
+<li>A query do usuário B é executada imadiatamente após o termino da
+query do usuário A termina.</li>
+<li>A query do usuário B excluirá a linha 6, no entanto essa não é mais
+a linha desejada e sim a linha de id=7</li>
+</ul></li>
+</ul>
+<ul>
+<li>Para contornar esse problema existe o lock.</li>
+</ul></li>
+</ul>
+<h3 id="lock-ou-bloqueio">Lock (ou bloqueio)</h3>
+<ul>
+<li>Trata-se de um mecanismo dos sistemas de bancos de dados que
+"tranca" momentaneamente as operações enquanto o banco está sendo
+manipulado.</li>
+<li>Existem diferentes niveis de bloqueio, sendo que por padrão, no
+mecanismo <strong>Inno DB</strong> implementa-se o <strong>bloqueio de
+registro</strong>, que protege apenas o registro que está sendo
+manipulado. Deixando o resto da tabela livro. No entanto existem
+bloqueios que progtegem toda a tabela e até bloqueios ao nível de
+usuário e de estrutura - ue impedem alterações simultanêas no formato de
+uma tabela.</li>
+<li>Locks especificos também podem ser definidos pelo usuário para
+tabelas especificas, que fornecem um controle maior da concorrência
+observada em um sistema, permitindo ajustar situações problemáticas de
+perfmormance ou de inconsistencia de um banco de dados</li>
+</ul>
+<h3 id="transações">Transações</h3>
+<ul>
+<li>Trata-se do mecanismo que permite que um conjunto de operações de
+banco de dados se comporte atomicamente, ou seja, como se fossem uma
+única operação.</li>
+<li>As consequencias dessas operações em uma transação podem ser
+aplicadas ou rejeitadas</li>
+<li>As transações são importantes para manter a integridade de dados,
+mas se utilizadas incorretamente podem causar lentidão ou travar
+recursos do banco de dados</li>
+<li>Transações possuem 4 propriedades padrão:
+<ol>
+<li>Atomicidade</li>
+<li>Consistência</li>
+<li>Isolamento</li>
+<li>Durabilidade</li>
+</ol></li>
+</ul>
+<ol>
+<li><p>Atomicidade</p>
+<ul>
+<li>Assegura que todas as operações sejam concluidas com sucesso. Caso
+contrário a transação é abortada e as operações feitas desde o inicio
+são desfeitas</li>
+</ul></li>
+<li><p>Consistência</p>
+<ul>
+<li>Assegura que o banco de dados seja alterado apropriadamente após a
+conclusão bem sucedida da transação</li>
+</ul></li>
+<li><p>Isolamento</p>
+<ul>
+<li>Cada transação é isolada de outra, ou seja, são executadas
+independetemente e transparentemente</li>
+</ul></li>
+<li><p>Durabilidade</p>
+<ul>
+<li>Garante que o resultado ou efeito de ua transação bem sucedida
+persista no banco de dados</li>
+</ul></li>
+<li><p>Operações que acompanham a transação</p>
+<ol>
+<li><p>Commit</p>
+<ul>
+<li>Após uma transação bem sucedida realiza a persistencia no banco de
+dados, commitando as alterações.</li>
+</ul></li>
+<li><p>Rollback</p>
+<ul>
+<li>Após uma falha na transação desfaz as operações, retornando o banco
+ao estado imediatamente anterior ao inicio da transação.</li>
+</ul></li>
+</ol></li>
+</ol>
+<h3 id="comandos-e-aplicações">Comandos e aplicações</h3>
+<ol>
+<li><p>Utilizando transações</p>
+<ol>
+<li>Iniciar a transação</li>
+<li>Executar um ou mais comando SQL como SELECT, INSERT, UPDATE ou
+DELETE, ou chamar funções e procedimentos</li>
+<li>Checa se há algum erro ou inconsistência no resultado</li>
+<li>Realiza Commit ou Rollback baseado no passo anterior</li>
+</ol></li>
+</ol>
 </body>
 </html>
